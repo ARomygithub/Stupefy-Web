@@ -4,7 +4,14 @@ Berikut adalah hal yang harus diperhatikan untuk pengumpulan tugas ini:
 2. Tambahkan anggota tim pada grup anda.
 3. **Fork** pada repository ini dengan organisasi yang telah dibuat.
 4. Ubah hak akses repository hasil Fork anda menjadi **private**.
-5. Silakan commit pada repository anda (hasil fork). Lakukan beberapa commit dengan pesan yang bermakna, contoh: `add register form`, `fix logout bug`, jangan seperti `final`, `benerin dikit`, `fix bug`. Disarankan untuk tidak melakukan commit dengan perubahan yang besar karena akan mempengaruhi penilaian (contoh: hanya melakukan satu commit kemudian dikumpulkan). Sebaiknya commit dilakukan setiap ada penambahan fitur. Commit dari setiap anggota tim akan mempengaruhi penilaian. Jadi, setiap anggota tim harus melakukan commit yang berpengaruh terhadap proses pembuatan aplikasi.
+5. Hal-hal yang harus diperhatikan.
+    * Silakan commit pada repository anda (hasil fork)
+    * Lakukan beberapa commit dengan pesan yang bermakna, contoh: “add register form”, “fix logout bug”, jangan seperti “final”, “benerin dikit”, “fix bug”.
+    * Disarankan untuk tidak melakukan commit dengan perubahan yang besar karena akan mempengaruhi penilaian (contoh: hanya melakukan satu commit kemudian dikumpulkan).
+    * Sebaiknya commit dilakukan setiap ada penambahan fitur.
+    * Commit dari setiap anggota tim akan mempengaruhi penilaian.
+    * Jadi, setiap anggota tim harus melakukan commit yang berpengaruh terhadap proses pembuatan aplikasi.
+    * Sebagai panduan bisa mengikuti [semantic commit](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716).
 6. Buatlah file README yang berisi:
     * Deskripsi aplikasi web
     * Daftar requirement
