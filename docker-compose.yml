@@ -3,7 +3,7 @@ services:
   web:
     image: stupefy-web:latest
     ports:
-      - 8080:80
+      - 8080:80  
     volumes:
       - .:/var/www/html
     networks:
