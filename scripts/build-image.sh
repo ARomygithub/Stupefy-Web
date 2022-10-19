@@ -1,1 +1,1 @@
-docker build -t tubes-1:latest .
+docker build -t stupefy-web:latest .
