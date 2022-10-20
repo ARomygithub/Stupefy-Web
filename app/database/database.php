@@ -7,9 +7,11 @@ class Database{
     private $db_name = DB_NAME;
     private $username = DB_USER;
     private $password = DB_PASSWORD;
-    public $conn;
+    private $conn;
+    private $stmt;
 
     public function __construct(){
+        echo $this->host;
         $this->conn = null;
 
         try{
@@ -20,8 +22,43 @@ class Database{
         }
     }
 
+    public function prepare($query){
+        $this->stmt = $this->conn->prepare($query);
+    }
 
+    public function execute(){
+        $this->stmt->execute();
+    }
 
+    public function bind($param, $value, $type = null){
+        if(is_null($type)){
+            if(is_int($value)){
+                $type = PDO::PARAM_INT;
+            }
+            else if(is_bool($value)){
+                $type = PDO::PARAM_BOOL;
+            }
+            else if(is_null($value)){
+                $type = PDO::PARAM_NULL;
+            }
+            else{
+                $type = PDO::PARAM_STR;
+            }
+        }
+
+        $this->stmt->bindValue($param, $value, $type);
+    }
+
+    
+    public function getAll(){
+        $this->execute();
+        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOne(){
+        $this->execute();
+        return $this->stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 
 ?>
