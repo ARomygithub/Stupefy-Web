@@ -1,0 +1,31 @@
+body {
+    background-color: black;
+}
+
+#container {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#content {
+    display: grid;
+    grid-template: auto / auto auto auto auto auto;
+    gap: 50px;
+}
+
+.album-title {
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.year{
+    color: rgba(255,255,255,0.5);
+}
+
+.genre{
+    color: rgba(255,255,255,0.5);
+}
