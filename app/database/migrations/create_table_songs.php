@@ -16,7 +16,7 @@ function create_table_songs(){
         Image_path VARCHAR(256),
         album_id INT NOT NULL,
         PRIMARY KEY(song_id),
-        FOREIGN KEY(album_id) REFERENCES albums(album_id)
+        FOREIGN KEY(album_id) REFERENCES album(album_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
     )');

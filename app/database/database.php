@@ -11,7 +11,6 @@ class Database{
     private $stmt;
 
     public function __construct(){
-        echo $this->host;
         $this->conn = null;
 
         try{
@@ -58,6 +57,10 @@ class Database{
     public function getOne(){
         $this->execute();
         return $this->stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function rowCount(){
+        return $this->stmt->rowCount();
     }
 }
 
