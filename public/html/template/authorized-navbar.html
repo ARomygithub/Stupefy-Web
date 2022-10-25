@@ -1,12 +1,24 @@
 <header>
-    <h1>Stupefy</h1>
     <nav>
-        <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="album.php">Albums</a></li>
-            <li><a href="login.php">Login</a></li>
-            <li><a href="register.php">Register</a></li>
-        </ul>
+        <div class="nav-content">
+            <div class="search-bar">
+                <form action="">
+                    <div class="search-img-container">
+                        <img src="./img/icons-search.png" class="search-img">
+                    </div>
+                    <input id="search-input" type="text" placeholder="Search for songs..." name="search">
+                </form>
+            </div>
+            <div class="user-info">
+                <div class="user-name-container">
+                    <span class="user-name">DeeGeeDow</span>
+                    <span class="user-role">Admin</span>
+                </div>
+            </div>
+            <form method="post">
+                <input class="logout" value="Log out" name="logout" type="submit">
+            </form>
+        </div>
     </nav>
 
 </header>

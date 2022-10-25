@@ -9,6 +9,7 @@ html {
 body {
     margin: 0;
     font-family: 'Inter';
+    background-color: black;
 }
 
 .container {
@@ -17,38 +18,144 @@ body {
 }
 
 
-
-
-[class*="col-"] {
-    float: left;
-    padding: 15px;
-}
-
-.col-1 {width: 8.33%;}
-.col-2 {width: 16.66%;}
-.col-3 {width: 25%;}
-.col-4 {width: 33.33%;}
-.col-5 {width: 41.66%;}
-.col-6 {width: 50%;}
-.col-7 {width: 58.33%;}
-.col-8 {width: 66.66%;}
-.col-9 {width: 75%;}
-.col-10 {width: 83.33%;}
-.col-11 {width: 91.66%;}
-.col-12 {width: 100%;}
-
-
 .side-container{
-    margin-left: 351px;
+    padding-left: 25%;
+    margin-right: 0;
 }
 
 nav{
-    background-color: #333;
+    background-color: black;
     overflow: hidden;
     position: fixed;
     top: 0;
+    width: 75%;
+}
+
+
+.nav-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 100px;
+}
+
+
+.search-bar{
+    width: 75%;
+}
+
+
+.search-bar form{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    background-color: #404040;
+    height: 50px;
+    border-radius: 100px 100px 100px 100px;
+    margin: 0;
+}
+
+.search-bar input{
+    border: none !important;
+    color: RGBA(255,255,255,100%);;
+    background-color: #404040;
+    font-size: 20px;
+    font-family: 'Inter';
+    padding: 0 20px;
+    margin-right: 20px;
     width: 100%;
 }
+
+.search-bar input:focus{
+    outline: none;
+}
+
+.search-bar input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px #404040 inset !important;
+    -webkit-text-fill-color: white !important;
+    font-family: 'Inter' !important;
+}
+
+.search-bar .search-img-container{
+    height: 30px;
+    width: 30px;
+    margin-left: 20px;
+}
+
+.search-bar .search-img-container img{
+    height: 100%;
+    width: 100%;
+}
+
+
+.nav-content a{
+    color: white;
+    text-decoration: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 27px;
+}
+
+.nav-content .login{
+    text-decoration: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 24px;
+    color: #404040;
+    background-color: white;
+    padding: 12px 20px;
+    border-radius: 100px 100px 100px 100px;
+    vertical-align: middle;
+}
+
+.nav-content .user-info{
+    
+    background-color: #161616;
+    height: 52px;
+    border-radius: 100px 100px 100px 100px;
+    padding: 5px 20px;
+    margin: 0 30px;
+    width:25%;
+
+}
+
+.nav-content .user-info .user-role{
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+}
+
+.nav-content .user-info .user-name{
+    color: white;
+    display: block;
+    
+}
+
+.nav-content form .logout{
+    text-decoration: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 24px;
+    color: white;
+    background-color: #841414;
+    padding: 12px 20px;
+    border-radius: 100px 100px 100px 100px;
+    vertical-align: middle;
+    margin-top: 17px;
+}
+
+
 
 .sidebar{
     background-color: black;
@@ -57,11 +164,60 @@ nav{
     top: 0;
     left:0;
     margin:0;
-    width: 351px;
+    width: 25%;
+
+}
+
+.sidebar ul{
+    margin:0;
+    padding: 0;
+}
+
+.sidebar a{
+    color: #CCCCCC;
+    text-decoration: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    padding: 10px 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+
+.sidebar a:hover{
+    background-color: #404040;
+    color: white;
+}
+
+.sidebar a.active{
+    color: white;
+}
+
+a .sidebar-icon{
+    width: 54px;
+    height: 54px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.sidebar .logo{
+    margin-top: 25px;
+    margin-bottom: 40px;
+}
+
+.sidebar .logo:hover{
+    background-color: black;
 }
 
 .content{
     margin-top: 100px;
-    padding: 1px 16px;
-    
+    margin-right: 0;
+    padding: 20px;
+    background-color: red;
 }
+
