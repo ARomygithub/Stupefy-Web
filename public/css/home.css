@@ -1,6 +1,24 @@
-/* .row {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-    flex-wrap: wrap;
-} */
+.contents td{
+    padding: 10px;
+}
+
+.contents .content-title {
+    padding-bottom: 0px;
+    color: white;
+}
+
+.contents .content-id{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 34px;
+}
+
+.contents .content-entry:hover{
+    background-color: #404040;
+    color: white;
+    outline: none;
+    cursor: pointer;
+}
+

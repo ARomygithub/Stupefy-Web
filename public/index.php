@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once __DIR__ . '/../app/controllers/authorization.php';
+require_once __DIR__ . '/../app/controllers/AuthController.php';
 
 $nav = file_get_contents('./html/template/authorized-navbar.html');
 $sidebar = file_get_contents('./html/template/admin-sidebar.html');
