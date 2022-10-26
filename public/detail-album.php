@@ -17,6 +17,16 @@
         echo $html;
     }
 
+    function echo_song($title = "Song Title"){
+        $html = <<<"EOT"
+            <div class="detail-song">
+                <div style="background-color: white; aspect-ratio: 1; height: 50px; margin: 20px;"></div>
+                <div class="song-title">$title</div>
+            </div>
+        EOT;
+        
+        echo $html;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +41,8 @@
 <body>
     <div id="container">
         <?php echo_detail_album("4 phenomena", "Photon Maiden", 3098) ?>
+        <?php echo_song("4 Challanges") ?>
+        <?php echo_song("4 Challanges") ?>
     </div>
 </body>
 </html>
