@@ -24,10 +24,11 @@ function generateRandomString(){
 function seed(){
     $db = new Database();
 
-    $db->prepare('INSERT INTO user(email, password, username, isAdmin) VALUES(:email, :password, :username, :isAdmin)');
+    $db->prepare('INSERT INTO user(email, password, username, name, isAdmin) VALUES(:email, :password, :username, :name, :isAdmin)');
     $db->bind(':email', 'test' . '@test.com');
     $db->bind(':password', password_hash('test', PASSWORD_DEFAULT));
     $db->bind(':username', 'test');
+    $db->bind(':name', 'test');
     $db->bind(':isAdmin', 0);
     $db->execute();
 

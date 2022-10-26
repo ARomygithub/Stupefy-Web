@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/add-song.css">
     <title>Stupefy | Add Song</title>
 </head>
@@ -16,20 +17,23 @@
             <div class="container-title">
                 Add New Song
             </div>
-            <form action="/app/controllers/SongController.php" method="POST" enctype="multipart/form-data" class="contents">
+            <form action="/app/controllers/SongController.php" method="POST" enctype="multipart/form-data"
+                class="contents">
                 <div class="input-group-0">
-                    <img src="/storage/default-song-thumbnail.png" id="song-thumbnail" alt="thumbnail">
-    
+                    <img src="/storage/default-thumbnail.png" id="song-thumbnail" alt="thumbnail">
+
                     <div class="input-container">
                         <label for="iamge">Upload Thumbnail (Optional)</label>
                         <div class="file-uploader">
-                            <input type="text" name="thumbnail-path" id="thumbnail-path" placeholder="Select thumbnail image file" disabled>
+                            <input type="text" name="thumbnail-path" id="thumbnail-path"
+                                placeholder="Select thumbnail image file" disabled>
                             <div class="upload-button" onclick="getFile()">Select File</div>
                         </div>
-                        <input type="file" name="thumbnail-image" id="thumbnail-image" name="thumbnail-image" accept="image/*" onchange="previewThumbnail(event)" hidden>
+                        <input type="file" name="thumbnail-image" id="thumbnail-image" name="thumbnail-image"
+                            accept="image/*" onchange="previewThumbnail(event)" hidden>
                     </div>
                 </div>
-                
+
                 <div class="input-group-1">
                     <div class="input-container">
                         <label for="song-title">Title</label>
@@ -41,14 +45,14 @@
                         <input type="text" name="song-genre" id="song-genre" placeholder="Song Genre" required>
                     </div>
                 </div>
-                
+
                 <div class="input-group-2">
                     <div class="input-group-2-1">
                         <div class="input-container">
                             <label for="release-date">Release Date</label>
                             <input type="date" name="release-date" id="release-date" placeholder="01/01/1992" required>
                         </div>
-    
+
                         <div class="input-container">
                             <label for="song-artist">Artist</label>
                             <input type="text" name="song-artist" id="song-artist" placeholder="Song Artist">
@@ -66,7 +70,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="input-container song-uploader">
                     <label for="song-file">Upload Song File</label>
                     <div class="field-with-icon">
@@ -75,7 +78,8 @@
                             <input type="text" name="song-path" id="song-path" placeholder="Select song file" disabled>
                             <div class="upload-button" onclick="getFile()">Select File</div>
                         </div>
-                        <input type="file" name="song-file" id="song-file" name="song-file" onchange="previewSong(event)" accept="audio/*" required hidden>
+                        <input type="file" name="song-file" id="song-file" name="song-file"
+                            onchange="previewSong(event)" accept="audio/*" required hidden>
                     </div>
                 </div>
 
@@ -91,3 +95,5 @@
     </div>
 
 </body>
+
+<script src="./js/add-song.js"></script>
