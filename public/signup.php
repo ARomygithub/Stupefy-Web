@@ -1,5 +1,10 @@
 <?php
     session_start();
+    require_once __DIR__ . '/../app/controllers/AuthController.php';
+
+    if(isValidAuthCookie($_COOKIE)) {
+        header('Location: /');
+    }
 
     function echo_field($name, $type, $placeholder, $value = ""){
         $html = <<<"EOT"

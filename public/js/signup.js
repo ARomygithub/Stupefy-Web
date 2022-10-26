@@ -160,7 +160,7 @@ signupButton.addEventListener("click", debounce(function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     console.log(xhr.responseText);
                     if(xhr.responseText === "signup success") {
-                        document.location.href = "./home.php";
+                        document.location.href = ".";
                     }
                         // } else {
                         // alert("Signup failed");
