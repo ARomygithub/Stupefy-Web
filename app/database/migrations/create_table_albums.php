@@ -8,11 +8,11 @@ function create_table_albums(){
     $db->prepare('CREATE TABLE IF NOT EXISTS  album(
         album_id INT NOT NULL AUTO_INCREMENT,
         Judul VARCHAR(64) NOT NULL,
-        Penyanyi VARCHAR(128) NOT NULL,
+        Penyanyi VARCHAR(128),
         Total_duration INT NOT NULL,
-        Image_path VARCHAR(256) NOT NULL,
+        Image_path VARCHAR(256),
         Tanggal_terbit DATE NOT NULL,
-        Genre VARCHAR(64) NOT NULL,
+        Genre VARCHAR(64),
         PRIMARY KEY(album_id)
     )');
 

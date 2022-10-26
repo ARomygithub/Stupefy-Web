@@ -17,7 +17,7 @@ class Album{
     }
 
     public function getByID($id){
-        $this->db->prepare("SELECT * FROM $this->table WHERE id = :id");
+        $this->db->prepare("SELECT * FROM $this->table WHERE album_id = :id");
         $this->db->bind(':id', $id);
         return $this->db->getOne();
     }
@@ -39,6 +39,11 @@ class Album{
         return $this->db->getAll();
     }
 
+
+    public function getAlbumSortByArtist(){
+        $this->db->prepare("SELECT * FROM $this->table ORDER BY Penyanyi");
+        return $this->db->getAll();
+    }
 }
 
 ?>

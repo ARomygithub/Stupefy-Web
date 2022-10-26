@@ -247,4 +247,31 @@ a .sidebar-icon{
 }
 
 
+.contents td{
+    padding: 10px;
+}
 
+.contents .content-title {
+    padding-bottom: 0px;
+    color: white;
+}
+
+
+.contents .content-entry:hover{
+    background-color: #404040;
+    color: white;
+    outline: none;
+    cursor: pointer;
+}
+
+.content-img-container{
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+}
+
+.content-img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}

@@ -10,7 +10,7 @@ function create_table_songs(){
         Judul VARCHAR(64) NOT NULL,
         Penyanyi VARCHAR(128) NOT NULL,
         Tanggal_terbit DATE NOT NULL,
-        Genre VARCHAR(64) NOT NULL,
+        Genre VARCHAR(64),
         Duration INT NOT NULL,
         Audio_path VARCHAR(256) NOT NULL,
         Image_path VARCHAR(256),

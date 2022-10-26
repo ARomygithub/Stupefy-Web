@@ -5,8 +5,11 @@
     function createEntry($song, $i){
         $entry = '<tbody class="content-entry">'
             .'<tr>'
-            . "<td class = 'content-id' rowspan='2'>" . $i . '</td>'
-            . "<td class = 'content-img-container' rowspan='2'>" . '<img src = ' . $song['Image_path'] . " class='content-img'>" . '</td>'
+            . "<td class = 'content-id' rowspan='2'>" . $i . '</td>';
+        if($song['Image_path'] == null){
+            $song['Image_path'] = '/storage/default-thumbnail.png';
+        }
+        $entry .= "<td class = 'content-img-container' rowspan='2'>" . '<img src = ' . $song['Image_path'] . " class='content-img'>" . '</td>'
             . "<td class = 'content-title' >" . $song['Judul'] . '</td>'
             . "<td class = 'content-year' rowspan='2'>" . $song['Tahun'] . '</td>'
             . "<td class = 'content-genre' rowspan='2'>" . $song['Genre'] . '</td>'

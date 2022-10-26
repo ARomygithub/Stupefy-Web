@@ -55,22 +55,21 @@ function seed(){
        $db->bind(':Judul', generateRandomString());
        $db->bind(':Penyanyi', generateRandomString());
        $db->bind(':Total_duration', random_int(1, 1000));
-       $db->bind(':Image_path', 'https://picsum.photos/200/300');
+       $db->bind(':Image_path', '/storage/default-thumbnail.png');
        $db->bind(':Tanggal_terbit', '2021-01-01');
        $db->bind(':Genre', generateRandomString());
        $db->execute();
    }
 
 
-    $db->prepare('INSERT INTO song(judul, penyanyi, tanggal_terbit, genre, duration, audio_path, image_path, album_id) VALUES(:title, :artist, :tanggal_terbit, :genre, :duration, :audio_path, :image_path, :album_id)');
+    $db->prepare('INSERT INTO song(judul, penyanyi, tanggal_terbit, genre, duration, audio_path, album_id) VALUES(:title, :artist, :tanggal_terbit, :genre, :duration, :audio_path, :album_id)');
     for($i = 0; $i<100; $i++){
         $db->bind(':title', generateRandomString());
         $db->bind(':artist', generateRandomString());
-        $db->bind(':tanggal_terbit', '2020-12-12');
+        $db->bind(':tanggal_terbit', '2019-12-12');
         $db->bind(':genre', generateRandomString());
         $db->bind(':duration', random_int(1, 1000));
         $db->bind(':audio_path', generateRandomString());
-        $db->bind(':image_path', generateRandomString());
         $db->bind(':album_id', random_int(1, 100));
         $db->execute();
     }

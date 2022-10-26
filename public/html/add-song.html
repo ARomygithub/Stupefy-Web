@@ -20,14 +20,14 @@
             <form action="/app/controllers/SongController.php" method="POST" enctype="multipart/form-data"
                 class="contents">
                 <div class="input-group-0">
-                    <img src="/storage/default-thumbnail.png" id="song-thumbnail" alt="thumbnail">
+                    <img class="thumbnail" src="/storage/default-thumbnail.png" id="song-thumbnail" alt="thumbnail">
 
                     <div class="input-container">
-                        <label for="iamge">Upload Thumbnail (Optional)</label>
+                        <label>Upload Thumbnail (Optional)</label>
                         <div class="file-uploader">
                             <input type="text" name="thumbnail-path" id="thumbnail-path"
                                 placeholder="Select thumbnail image file" disabled>
-                            <div class="upload-button" onclick="getFile()">Select File</div>
+                            <div class="upload-button" onclick="getThumbnail()">Select File</div>
                         </div>
                         <input type="file" name="thumbnail-image" id="thumbnail-image" name="thumbnail-image"
                             accept="image/*" onchange="previewThumbnail(event)" hidden>
@@ -41,8 +41,8 @@
                     </div>
 
                     <div class="input-container">
-                        <label for="song-genre">Genre</label>
-                        <input type="text" name="song-genre" id="song-genre" placeholder="Song Genre" required>
+                        <label for="song-genre">Genre (Optional)</label>
+                        <input type="text" name="song-genre" id="song-genre" placeholder="Song Genre">
                     </div>
                 </div>
 
@@ -54,37 +54,37 @@
                         </div>
 
                         <div class="input-container">
-                            <label for="song-artist">Artist</label>
+                            <label for="song-artist">Artist (Optional)</label>
                             <input type="text" name="song-artist" id="song-artist" placeholder="Song Artist">
                         </div>
                     </div>
                     <div class="input-group-2-2">
                         <div class="input-container">
-                            <label for="song-album">Album</label>
+                            <label for="song-album">Album (Optional)</label>
                             <div class="field-with-icon">
-                                <img src="img/icons-music-album-grey.png" alt="">
-                                <select name="song-album" id="song-album">
-                                    <option value="0" disabled> Choose Album</option>
+                                <img src="img/icons-music-album-grey.png" alt="album">
+                                <select name="song-album" id="song-album" onchange="getAlbumArtist(event)" value='-1'>
                                 </select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="input-container song-uploader">
-                    <label for="song-file">Upload Song File</label>
+                    <label>Upload Song File</label>
                     <div class="field-with-icon">
                         <img src="img/icons-music-file-grey.png" alt="">
                         <div class="file-uploader">
-                            <input type="text" name="song-path" id="song-path" placeholder="Select song file" disabled>
-                            <div class="upload-button" onclick="getFile()">Select File</div>
+                            <input type="text" name="song-path" id="song-path" placeholder="Select song file" disabled required>
+                            <div class="upload-button" onclick="getSong()">Select File</div>
                         </div>
                         <input type="file" name="song-file" id="song-file" name="song-file"
                             onchange="previewSong(event)" accept="audio/*" required hidden>
                     </div>
                 </div>
 
-                <audio controls>
-                    <source type="audio/*" id="song-preview">
+                <audio id="add-audio" controls >
+                    <source type="audio/mp3" id="song-preview" src="">
+                    <source type="audio/ogg" id="song-preview" src="">
                     Your browser does not support the audio element.
                 </audio>
                 <input type="submit" value="Submit" name="submit-button" id="submit">
