@@ -1,0 +1,194 @@
+.input-container label{
+    display: block;
+    padding-left: 20px;
+    font-size: 16px;
+}
+
+.contents{
+    width: 100%;
+    align-items: center;
+}
+
+input, select{
+    background-color: white;
+    border-radius: 100px 100px 100px 100px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    height: 50px;
+    color: #404040;
+    padding: 0px 20px;
+}
+
+.input-group-0{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end !important;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.input-group-0 .input-container{
+    width: 65% !important;
+}
+
+.file-uploader{
+    display: flex;
+}
+
+#thumbnail-path, #song-path{
+    border-radius: 100px 0 0 100px !important;
+    display: inline-block;
+    margin-right: 0;
+    width: 100%;
+}
+
+
+.upload-button{
+    background-color: #1DB954;
+    color: white;
+    display: inline-block;
+    height: 50px;
+    padding: 0px 22px;
+    border-radius: 0 100px 100px 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    padding-top: 14px;
+    width: 160px;
+    white-space: nowrap;
+}
+
+[class*=input-group-]{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-evenly; */
+    row-gap: 20px;
+    align-items: center;
+    flex-wrap: wrap !important;
+    margin-bottom: 20px;
+    flex-grow: 1
+
+}
+
+[class*=input-group-] .input-container{
+    padding-left: 20px;
+    flex-grow: 1
+
+}
+
+[class*=input-group-] input, select{
+    width: 100%;
+}
+
+
+.input-group-2-1 .input-container{
+    width: 100%;
+}
+
+.input-group-2-2 .input-container{
+    width: 100%;
+}
+
+.field-with-icon{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.field-with-icon img{
+    height: 54px;
+    width: 54px;
+    margin-right: 15px;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+
+.field-with-icon select{
+    padding: 0 20px;
+    width: calc(100%-54px);
+    display: inline-block;
+}
+
+.field-with-icon .file-uploader{
+    padding: 0;
+    width: 90%;
+    display: flex;
+    padding-right: 25px;
+}
+
+.field-with-icon .file-uploader input{
+    width: calc(100%-160px);
+    display: inline-block;
+}
+
+
+#song-file{
+    display: none !important;
+}
+
+
+audio{
+    width: 100%;
+    height: 50px;
+    margin: 20px;
+    padding: 0 0px;
+    padding-right: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#submit{
+    background-color: #1DB954;
+    color: white;
+    display: inline-block;
+    height: 50px;
+    margin-left: 20px;
+    margin-top: 40px;
+    width: 20%;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+
+    width: 160px;
+}
+/* 
+
+.field-with-icon input{
+    padding: 0 20px;
+} */
+
+
+
+
+
+/* .input-group-1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.input-group-2 .input-container{
+    width: 45%;
+}
+
+.input-group-2 input{
+    width: 100%;
+} */
+

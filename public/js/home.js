@@ -9,7 +9,7 @@ window.onload = function(){
             console.log(xhr.responseText);
             let result = JSON.parse(xhr.responseText);
         
-            card_container.innerHTML = "<h2>Unfortunately, there is no song for you</h2>";
+            card_container.innerHTML = "<tr> Unfortunately, there is no song for you </tr>";
             if (result[0] !== "") {
                 card_container.innerHTML = result[0];
             }

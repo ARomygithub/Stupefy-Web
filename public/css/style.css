@@ -216,10 +216,11 @@ a .sidebar-icon{
 
 .content{
     margin-top: 100px;
-    margin-right: 0;
+    margin-right: 20px;
     padding: 30px;
     background-color: #161616;
     border-radius: 20px;
+    margin-bottom: 100px;
 }
 
 .container-title{
@@ -230,7 +231,7 @@ a .sidebar-icon{
     line-height: 34px;
     color: white;
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .contents{
