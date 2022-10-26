@@ -6,8 +6,8 @@ window.onload = function(){
     xhr.onreadystatechange = function() { 
         if (xhr.readyState == 4 && xhr.status == 200) {
             let contents = document.getElementsByClassName("contents")[0];
+            console.log(xhr.responseText);
             let result = JSON.parse(xhr.responseText);
-        
             contents.innerHTML = "<tr> Unfortunately, there is no song for you </tr>";
             if (result[0] !== "") {
                 contents.innerHTML = result[0];

@@ -14,47 +14,67 @@
         $cards = $albums['Penyanyi'];
         echo json_encode([$cards]);
     } else if(isset($_POST['add-song-form'])){
-        $thumbnail_path = "./../../storage/thumbnail//";
-        $song_file_path = "./../../storage//";
+        $thumbnail_directory = "./../../storage/thumbnail//";
+        $song_file_directory = "./../../storage//";
 
-        $thumbnail_path = $thumbnail_path . $_FILES['thumbnail-image']['name']; 
-        $song_file_path = $song_file_path . $_FILES['song-file']['name'];
+        $thumbnail_path = $thumbnail_directory . $_FILES['thumbnail-image']['name']; 
+        
+        $song_file_path = $song_file_directory . $_FILES['song-file']['name'];
 
-        if( $thumbnail_path != "" ) {
+
+        $i=1;
+        while(file_exists($song_file_path)){
+            $song_file_path = $song_file_directory . $_FILES['song-file']['name']."($i)";
+            $i++;
+        }
+
+        $error = false;
+
+        if( $_FILES['thumbnail-image']['name'] != "" ) {
+            $i=1;
+            while(file_exists($thumbnail_path)){
+                $thumbnail_path = $thumbnail_directory . $_FILES['thumbnail-image']['name']."($i)";
+                $i++;
+            }
+
             if(!move_uploaded_file($_FILES['thumbnail-image']['tmp_name'], $thumbnail_path)){
-                echo json_encode(['thumbnail-error' => 'Failed to upload thumbnail image']);
+                echo json_encode(['status' => 'thumbnail-error', 'message' => 'Failed to upload thumbnail image']);
+                $error = true;
             }
         } else{
-            $thumbnail_name = 'default-thumbnail.png';    
+            $thumbnail_path = $thumbnail_directory . 'default-thumbnail.png';    
         }
 
-        if(!move_uploaded_file($_FILES['song-file']['tmp_name'], $song_file_path)){
-            echo json_encode(['song-file-error' => 'Failed to upload song file']);
+        if(!$error&& !move_uploaded_file($_FILES['song-file']['tmp_name'], $song_file_path)){
+            echo json_encode(['status' => 'song-file-error', 'message' => 'Failed to upload song file']);
+            $error = true;
         }
 
-        $song = new Song();
-        $Judul = $_POST['song-title'];
-        $Penyanyi = $_POST['song-artist'] or NULL;
-        $Album = $_POST['song-album'];
-        if($Album === '-1'){
-            $Album = NULL;
+        if(!$error){
+            $song = new Song();
+            $Judul = $_POST['song-title'];
+            $Penyanyi = $_POST['song-artist'] or NULL;
+            $Album = $_POST['song-album'];
+            if($Album === '-1'){
+                $Album = NULL;
+            }
+            $Thumbnail = $thumbnail_path;
+            $Lagu = $song_file_path;
+            $Raw_durasi = $_POST['duration'];
+            $Durasi = Floor($Raw_durasi);
+    
+            $Genre = $_POST['song-genre'] or NULL;
+            $Raw_tanggal_terbit = $_POST['release-date'];
+            $Tanggal_terbit = date('Y-m-d', strtotime($Raw_tanggal_terbit));
+            
+            $song->createSong($Judul, $Penyanyi, $Tanggal_terbit, $Genre, $Thumbnail, $Album, $Lagu, $Durasi);
+    
+            if(isset($Album)){
+                $albums->updateDuration($Album, $Durasi);
+            }
+            
+            echo json_encode(['status' => 'success', 'message' => 'Song added successfully']);
         }
-        $Thumbnail = $thumbnail_path;
-        $Lagu = $song_file_path;
-        $Raw_durasi = $_POST['duration'];
-        $Durasi = Floor($Raw_durasi);
-
-        $Genre = $_POST['song-genre'] or NULL;
-        $Raw_tanggal_terbit = $_POST['release-date'];
-        $Tanggal_terbit = date('Y-m-d', strtotime($Raw_tanggal_terbit));
-        
-        $song->createSong($Judul, $Penyanyi, $Tanggal_terbit, $Genre, $Thumbnail, $Album, $Lagu, $Durasi);
-
-        if(isset($Album)){
-            $albums->updateDuration($Album, $Durasi);
-        }
-        
-        echo json_encode(['success' => 'Song added successfully']);
     } 
     else{
         $albums = $albums->getAlbumSortByArtist();

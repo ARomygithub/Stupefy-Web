@@ -15,6 +15,7 @@ function create_table_songs(){
         Audio_path VARCHAR(256) NOT NULL,
         Image_path VARCHAR(256),
         album_id INT,
+        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY(song_id),
         FOREIGN KEY(album_id) REFERENCES album(album_id)
         ON DELETE CASCADE

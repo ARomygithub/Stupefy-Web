@@ -44,7 +44,7 @@ class Song{
     }
 
     public function getTemplated($offset, $limit){
-        $this->db->prepare("SELECT Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table LIMIT :offset, :limit");
+        $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table ORDER BY last_updated DESC LIMIT :offset, :limit");
         $this->db->bind(':offset', $offset);
         $this->db->bind(':limit', $limit);
         return $this->db->getAll();

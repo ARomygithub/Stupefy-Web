@@ -48,15 +48,33 @@ function previewThumbnail(event){
     let thumbnail = document.getElementById("song-thumbnail");
     let thumbnailPath = document.getElementById("thumbnail-path");
 
-    var input = event.target;
-    var reader = new FileReader();
-    reader.onload = function(){
-        var dataURL = reader.result;
+    if(event.target.files[0].size > 2000000){
+        document.getElementById("thumbnail-error").innerHTML = "Thumbnail size must be less than 2MB";
+        document.getElementById("thumbnail-error").style.display = "block";
+        image.value = "";
+    } else{
+        document.getElementById("thumbnail-error").style.display = "none";
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+            var dataURL = reader.result;
+    
+            thumbnail.src = dataURL;
+            thumbnailPath.value = event.target.files[0].name;
+        };
 
-        thumbnail.src = dataURL;
-        thumbnailPath.value = event.target.files[0].name;
-    };
-    reader.readAsDataURL(input.files[0]);
+        reader.onerror = function (error) {
+            image.value = "";
+            console.log('Error: ', error);
+        };
+
+        reader.onabort = function (error) {
+            image.value = "";
+            console.log('Error: ', error);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }
 
 
@@ -97,17 +115,36 @@ function previewSong(event){
     let songPreview = document.getElementById("song-preview");
     let audio = document.getElementById("add-audio");
 
-    var input = event.target;
-    var reader = new FileReader();
-    reader.onload = function(){
-        var dataURL = reader.result;
-        // console.log(dataURL);
-        songPreview.src = dataURL;
-        songPath.value = event.target.files[0].name;
-        audio.load();
-        audio.play();
-    };
-    reader.readAsDataURL(input.files[0]);
+    if(event.target.files[0].size > 10000000){
+        document.getElementById("song-file-error").innerHTML = "Song size must be less than 10MB";
+        document.getElementById("song-file-error").style.display = "block";
+        song.value = "";
+    } else{
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+            var dataURL = reader.result;
+            // console.log(dataURL);
+            songPreview.src = dataURL;
+            songPath.value = event.target.files[0].name;
+            audio.load();
+            audio.play();
+        };
+
+        reader.onerror = function (error) {
+            song.value = "";
+            console.log('Error: ', error);
+        };
+
+        reader.onabort = function (error) {
+            song.value = "";
+            console.log('Error: ', error);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+
+    
 }
 
 function submitform(event){
@@ -124,9 +161,7 @@ function submitform(event){
         formData.append("duration", audio.duration);
         formData.append("add-song-form", true);
 
-        for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
-        }
+
 
         let xhr = new XMLHttpRequest();
 
@@ -135,12 +170,12 @@ function submitform(event){
             if (xhr.readyState == 4 && xhr.status == 200) {
                 console.log(xhr.responseText);
                 let result = JSON.parse(xhr.responseText);
-                console.log(result);
-                if(result[0] === "success"){
-                    alert("Song added successfully");
+                if(result['status'] === "success"){
+                    alert(result['message']);
                     document.location.href = ".";
                 } else{
-                    // document.getElementById().style.display = "block";
+                    document.getElementById(result['status']).innerHTML = result['message'];
+                    document.getElementById(result['status']).style.display = "block";
                 }
             }
         }
@@ -160,7 +195,6 @@ function validateForm(form){
     let songReleaseDate = form.get("release-date");
     let songFile = form.get("song-file");
 
-    console.log(songFile)
 
     if(songName === ""){
         document.getElementById("song-title-error").innerHTML = "Song title is required";
@@ -178,7 +212,7 @@ function validateForm(form){
         document.getElementById("release-date-error").style.display = "none";
     }
 
-    if(songFile.size === 0){
+    if(songFile.value === ""){
         document.getElementById("song-file-error").innerHTML = "Song file is required";
         document.getElementById("song-file-error").style.display = "block";
         error = true;
