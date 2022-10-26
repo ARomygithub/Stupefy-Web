@@ -25,17 +25,16 @@
                         <input type="password" name="password" id="password" placeholder="Password"/>
                     </div>
                     <div id="div-button">
-                        <button id="login-button">
-                            <p>LOG IN</p>
-                        </button>
+                        <input type="submit" id="login-button" value="LOG IN"/>
                     </div>
                     <hr>
                 </form>
             </div>
             <label class="label1">Don't have an account?</label>
-            <div id="register" href="register.php">
+            <div id="signup" href="signup.php">
                 <label>SIGN UP</label>
             </div>
         </div>
     </div>
 </body>
+</html>

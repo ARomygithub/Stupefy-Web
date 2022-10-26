@@ -10,6 +10,7 @@ function create_table_users(){
         email VARCHAR(256) NOT NULL UNIQUE,
         password VARCHAR(256) NOT NULL,
         username VARCHAR(64) NOT NULL,
+        name VARCHAR(256) NOT NULL,
         isAdmin BOOLEAN NOT NULL,
         PRIMARY KEY(user_id)
     )');

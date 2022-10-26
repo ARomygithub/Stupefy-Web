@@ -38,6 +38,23 @@ class User{
         }
         return false;
     }
+
+    public function signup($data){
+        if(!isset($data['name']) || !isset($data['username']) || !isset($data['email']) || !isset($data['password'])){
+            return false;
+        }
+        $this->db->prepare("INSERT INTO $this->table (name, username, email, password, isAdmin) VALUES (:name, :username, :email, :password, false)");
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':username', $data['username']);
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':password', $data['password']);
+        $id = $this->db->lastInsertId();
+        if(!empty($id)){
+            return $id;
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>
