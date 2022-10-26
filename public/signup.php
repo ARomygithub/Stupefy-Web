@@ -1,6 +1,5 @@
 <?php
     session_start();
-    require_once '../app/controllers/signup.php';
 
     function echo_field($name, $type, $placeholder, $value = ""){
         $html = <<<"EOT"
@@ -30,15 +29,15 @@
                 <img src="img/logo.png" alt="logo" />
             </div>
             <div id="signup-form">
-                <form action="../app/controllers/SignUpController.php" method="POST">
+                <form>
                     <?php echo_field("Name", "text", "Your name"); ?>
                     <?php echo_field("Username", "text", "Username"); ?>
                     <?php echo_field("Email", "email", "Email"); ?>
                     <?php echo_field("Password", "password", "Password"); ?>
                     <?php echo_field("Confirm Password", "password", "Confirm Password"); ?>
                     <p class="to-term">By clicking on sign-up, you agree to <a href="tes.php">Stupefy's Terms and Conditions of Use</a></p>
-                    <input type="submit" id="signup-button" value="SIGN UP" name="signup"/>
                 </form>
+                    <button id="signup-button">SIGN UP</button>
             </div>
             <label class="to-login">Have an account? <a href="login.php">Log in</a></label>
         </div>

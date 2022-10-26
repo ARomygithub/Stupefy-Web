@@ -22,14 +22,15 @@ class User{
         return $this->db->getOne();
     }
 
-    public function get($username, $is_admin = false, $offset, $limit){
-        $this->db->prepare("SELECT * FROM $this->table WHERE username = :username AND is_admin = :is_admin LIMIT :offset, :limit");
+    public function get($username, $limit, $isAdmin = false){
+        $this->db->prepare("SELECT * FROM $this->table WHERE username = :username AND isAdmin = :isAdmin LIMIT :limit");
         $this->db->bind(':username', $username);
-        $this->db->bind(':is_admin', $is_admin);
+        $this->db->bind(':isAdmin', $isAdmin);
+        $this->db->bind(':limit', $limit);
         $user = $this->db->getOne();
         if($user){
-            if($is_admin){
-                if($user['is_admin'] == 1){
+            if($isAdmin){
+                if($user['isAdmin'] == 1){
                     return $user;
                 }
             }else{
@@ -37,6 +38,18 @@ class User{
             }
         }
         return false;
+    }
+
+    public function getByUsername($username) {
+        $this->db->prepare("SELECT * FROM $this->table WHERE username = :username");
+        $this->db->bind(':username', $username);
+        return $this->db->getOne();
+    }
+
+    public function getByEmail($email) {
+        $this->db->prepare("SELECT * FROM $this->table WHERE email = :email");
+        $this->db->bind(':email', $email);
+        return $this->db->getOne();
     }
 
     public function signup($data){
@@ -47,7 +60,7 @@ class User{
         $this->db->bind(':name', $data['name']);
         $this->db->bind(':username', $data['username']);
         $this->db->bind(':email', $data['email']);
-        $this->db->bind(':password', $data['password']);
+        $this->db->bind(':password', PASSWORD_HASH($data['password'], PASSWORD_DEFAULT));
         $id = $this->db->lastInsertId();
         if(!empty($id)){
             return $id;
