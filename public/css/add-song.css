@@ -28,6 +28,7 @@ audio{
     flex-direction: row;
     flex-wrap: wrap;
     padding-right: 25px;
+    margin-top: 30px;
 }
 
 

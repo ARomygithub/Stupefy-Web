@@ -71,6 +71,23 @@ class Song{
         return $this->db->getAll();
     }
 
+    public function createSong($judul, $penyanyi, $tanggal_terbit, $genre, $image_path, $album_id, $song_path, $duration){
+        $this->db->prepare("INSERT INTO $this->table (judul, penyanyi, tanggal_terbit, genre, image_path, album_id, audio_path, duration) VALUES (:judul, :penyanyi, :tanggal_terbit, :genre, :image_path, :album_id, :audio_path, :duration)");
+        $this->db->bind(':judul', $judul);
+        $this->db->bind(':penyanyi', $penyanyi);
+        $this->db->bind(':tanggal_terbit', $tanggal_terbit);
+        $this->db->bind(':genre', $genre);
+        $this->db->bind(':image_path', $image_path);
+        $this->db->bind(':album_id', $album_id);
+        $this->db->bind(':audio_path', $song_path);
+        $this->db->bind(':duration', $duration);
+
+        return $this->db->execute();
+    }
+
+
+
+
 }
 
 ?>

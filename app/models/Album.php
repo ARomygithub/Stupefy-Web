@@ -44,6 +44,13 @@ class Album{
         $this->db->prepare("SELECT * FROM $this->table ORDER BY Penyanyi");
         return $this->db->getAll();
     }
+
+    public function updateDuration($album_id, $add_duration){
+        $this->db->prepare("UPDATE $this->table SET Total_duration = Total_duration + :add_duration WHERE album_id = :album_id");
+        $this->db->bind(':add_duration', $add_duration);
+        $this->db->bind(':album_id', $album_id);
+        $this->db->execute();
+    }
 }
 
 ?>

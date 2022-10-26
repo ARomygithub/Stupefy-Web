@@ -6,6 +6,7 @@ services:
       - 8080:80  
     volumes:
       - .:/var/www/html
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - stupefy-network
     env_file: .env

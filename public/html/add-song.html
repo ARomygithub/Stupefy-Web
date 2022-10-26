@@ -17,10 +17,9 @@
             <div class="container-title">
                 Add New Song
             </div>
-            <form action="/app/controllers/SongController.php" method="POST" enctype="multipart/form-data"
-                class="contents">
+            <form enctype="multipart/form-data" class="contents" id="add-song-form">
                 <div class="input-group-0">
-                    <img class="thumbnail" src="/storage/default-thumbnail.png" id="song-thumbnail" alt="thumbnail">
+                    <img class="thumbnail" src="/storage/thumbnail/default-thumbnail.png" id="song-thumbnail" alt="thumbnail">
 
                     <div class="input-container">
                         <label>Upload Thumbnail (Optional)</label>
@@ -31,6 +30,7 @@
                         </div>
                         <input type="file" name="thumbnail-image" id="thumbnail-image" name="thumbnail-image"
                             accept="image/*" onchange="previewThumbnail(event)" hidden>
+                        <div class="error-message" id="thumbnail-error">Salah</div>
                     </div>
                 </div>
 
@@ -38,11 +38,13 @@
                     <div class="input-container">
                         <label for="song-title">Title</label>
                         <input type="text" name="song-title" id="song-title" placeholder="Song Title" required>
+                        <div class="error-message" id="song-title-error">Salah</div>
                     </div>
 
                     <div class="input-container">
                         <label for="song-genre">Genre (Optional)</label>
                         <input type="text" name="song-genre" id="song-genre" placeholder="Song Genre">
+                        <div class="error-message" id="song-genre-error">Salah</div>
                     </div>
                 </div>
 
@@ -51,11 +53,13 @@
                         <div class="input-container">
                             <label for="release-date">Release Date</label>
                             <input type="date" name="release-date" id="release-date" placeholder="01/01/1992" required>
+                            <div class="error-message" id="release-date-error">Salah</div>
                         </div>
 
                         <div class="input-container">
                             <label for="song-artist">Artist (Optional)</label>
                             <input type="text" name="song-artist" id="song-artist" placeholder="Song Artist">
+                            <div class="error-message" id="song-artist-error">Salah</div>
                         </div>
                     </div>
                     <div class="input-group-2-2">
@@ -66,6 +70,7 @@
                                 <select name="song-album" id="song-album" onchange="getAlbumArtist(event)" value='-1'>
                                 </select>
                             </div>
+                            <div class="error-message" id="song-album-error">Salah</div>
                         </div>
                     </div>
                 </div>
@@ -79,15 +84,16 @@
                         </div>
                         <input type="file" name="song-file" id="song-file" name="song-file"
                             onchange="previewSong(event)" accept="audio/*" required hidden>
+                        </div>
                     </div>
-                </div>
+                    <div class="error-message" id="song-file-error">Salah</div>
 
                 <audio id="add-audio" controls >
                     <source type="audio/mp3" id="song-preview" src="">
                     <source type="audio/ogg" id="song-preview" src="">
                     Your browser does not support the audio element.
                 </audio>
-                <input type="submit" value="Submit" name="submit-button" id="submit">
+                <input type="submit" value="Submit" name="submit-button" id="submit" onclick="submitform(event)">
 
             </form>
         </div>

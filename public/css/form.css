@@ -89,6 +89,9 @@ input, select{
     white-space: nowrap;
 }
 
+.upload-button:hover{
+    background-color: #1ED760;
+}
 
 .field-with-icon{
     width: 100%;
@@ -131,4 +134,19 @@ input, select{
 
 #submit:hover{
     cursor: pointer;
+    background-color: #1ED760;
+}
+
+
+.error-message{
+    color: #CC1F1F!important;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 30px;
+    margin-bottom: -30px;
+    padding-left: 20px;
+    display: none;
+    padding-top: 0;
 }

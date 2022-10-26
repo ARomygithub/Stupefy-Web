@@ -13,6 +13,7 @@ function create_table_albums(){
         Image_path VARCHAR(256),
         Tanggal_terbit DATE NOT NULL,
         Genre VARCHAR(64),
+        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY(album_id)
     )');
 

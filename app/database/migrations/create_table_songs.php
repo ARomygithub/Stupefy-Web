@@ -8,13 +8,13 @@ function create_table_songs(){
     $db->prepare('CREATE TABLE IF NOT EXISTS song(
         song_id INT NOT NULL AUTO_INCREMENT,
         Judul VARCHAR(64) NOT NULL,
-        Penyanyi VARCHAR(128) NOT NULL,
+        Penyanyi VARCHAR(128),
         Tanggal_terbit DATE NOT NULL,
         Genre VARCHAR(64),
         Duration INT NOT NULL,
         Audio_path VARCHAR(256) NOT NULL,
         Image_path VARCHAR(256),
-        album_id INT NOT NULL,
+        album_id INT,
         PRIMARY KEY(song_id),
         FOREIGN KEY(album_id) REFERENCES album(album_id)
         ON DELETE CASCADE

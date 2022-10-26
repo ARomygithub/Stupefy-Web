@@ -12,6 +12,11 @@ window.onload = function() {
             if (result[0] !== "") {
                 contents.innerHTML += result[0];
             }
+
+            for(let i=0; i<document.getElementsByClassName('error-message').length; i++){
+                document.getElementsByClassName('error-message')[i].style.display = "none";
+            }
+            
         }
     }
     url = "/app/controllers/SongController.php";
@@ -105,3 +110,81 @@ function previewSong(event){
     reader.readAsDataURL(input.files[0]);
 }
 
+function submitform(event){
+    event.preventDefault();
+    let form = document.getElementById("add-song-form");
+    let audio = document.getElementById("add-audio");
+    let formData = new FormData(form);
+
+    if(!formData['song-artist']){
+        formData.append('song-artist', document.getElementById("song-artist").value);
+    }
+
+    if(validateForm(formData)){
+        formData.append("duration", audio.duration);
+        formData.append("add-song-form", true);
+
+        for (var pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+        }
+
+        let xhr = new XMLHttpRequest();
+
+
+        xhr.onreadystatechange = function() { 
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+                let result = JSON.parse(xhr.responseText);
+                console.log(result);
+                if(result[0] === "success"){
+                    alert("Song added successfully");
+                    document.location.href = ".";
+                } else{
+                    // document.getElementById().style.display = "block";
+                }
+            }
+        }
+        url = "/app/controllers/SongController.php";
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.send(formData);
+    }
+
+    
+}
+
+function validateForm(form){
+    let error = false;
+    let songName = form.get("song-title");
+    let songReleaseDate = form.get("release-date");
+    let songFile = form.get("song-file");
+
+    console.log(songFile)
+
+    if(songName === ""){
+        document.getElementById("song-title-error").innerHTML = "Song title is required";
+        document.getElementById("song-title-error").style.display = "block";
+        error = true;
+    } else{
+        document.getElementById("song-title-error").style.display = "none";
+    }
+
+    if(songReleaseDate === ""){
+        document.getElementById("release-date-error") .innerHTML= "Song release date is required";
+        document.getElementById("release-date-error").style.display = "block";
+        error = true;
+    } else{
+        document.getElementById("release-date-error").style.display = "none";
+    }
+
+    if(songFile.size === 0){
+        document.getElementById("song-file-error").innerHTML = "Song file is required";
+        document.getElementById("song-file-error").style.display = "block";
+        error = true;
+    } else{
+        document.getElementById("song-file-error").style.display = "none";
+    }
+
+    return !error;
+}

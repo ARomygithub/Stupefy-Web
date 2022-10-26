@@ -12,6 +12,7 @@ function create_table_users(){
         username VARCHAR(64) NOT NULL,
         name VARCHAR(256) NOT NULL,
         isAdmin BOOLEAN NOT NULL,
+        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY(user_id)
     )');
 

@@ -69,7 +69,7 @@ function seed(){
         $db->bind(':tanggal_terbit', '2019-12-12');
         $db->bind(':genre', generateRandomString());
         $db->bind(':duration', random_int(1, 1000));
-        $db->bind(':audio_path', generateRandomString());
+        $db->bind(':audio_path', '/storage/Believer.mp3');
         $db->bind(':album_id', random_int(1, 100));
         $db->execute();
     }
