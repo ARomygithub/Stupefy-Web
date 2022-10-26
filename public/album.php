@@ -1,8 +1,12 @@
 <?php
-    function echo_card($title = "Album Title", $artist = "Artist", $year = "1970", $genre = "Music"){
+    require_once __DIR__ . '/../app/models/Album.php';
+
+    function echo_card($title = "Album Title", $artist = "Artist", $year = "1970", $genre = "Music", $image_src = "../storage/default-song-thumbnail.png"){
         $html = <<<"EOT"
             <div class="card">
-                <div style="background-color: white; aspect-ratio: 1;"></div>
+                <div class="image-container">
+                    <image src="$image_src" />
+                </div>
                 <div class="main-info">
                     <div class="album-title">$title</div>
                     <div class="artist">$artist</div>
@@ -30,12 +34,10 @@
     <div id="container">
         <h1>Albums</h1>
         <div id="content">
-            <?php echo_card("Mantra Hujan", "Kobo Kanaeru", "2022", "VTuber"); ?>
-            <?php echo_card("Mantra Hujan", "Kobo Kanaeru", "2022", "VTuber"); ?>
-            <?php echo_card("Mantra Hujan", "Kobo Kanaeru", "2022", "VTuber"); ?>
-            <?php echo_card("Mantra Hujan", "Kobo Kanaeru", "2022", "VTuber"); ?>
-            <?php echo_card("Mantra Hujan", "Kobo Kanaeru", "2022", "VTuber"); ?>
-            <?php echo_card("Mantra Hujan", "Kobo Kanaeru", "2022", "VTuber"); ?>
+            <?php 
+                echo_card("Mantra Hujan", "Kobo Kanaeru", "2022", "VTuber"); 
+                echo_card("Mantra Hujan", "Kobo Kanaeru", "2022", "VTuber"); 
+            ?>
         </div>
     </div>
 </body>

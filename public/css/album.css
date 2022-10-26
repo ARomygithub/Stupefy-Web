@@ -20,6 +20,10 @@ body {
     flex-wrap: wrap;
 }
 
+.image-container {
+    aspect-ratio: 1;
+}
+
 .album-title {
     font-weight: 600;
     font-size: 20px;
