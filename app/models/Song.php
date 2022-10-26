@@ -40,7 +40,14 @@ class Song{
         $this->db->prepare("SELECT * FROM $this->table LIMIT :offset, :limit");
         $this->db->bind(':offset', $offset);
         $this->db->bind(':limit', $limit);
-        return $this->db->getOne();
+        return $this->db->getAll();
+    }
+
+    public function getTemplated($offset, $limit){
+        $this->db->prepare("SELECT Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table LIMIT :offset, :limit");
+        $this->db->bind(':offset', $offset);
+        $this->db->bind(':limit', $limit);
+        return $this->db->getAll();
     }
 
     public function getWithOrder($offset, $limit, $order_by, $order = 'ASC'){
