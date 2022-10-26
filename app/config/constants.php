@@ -8,4 +8,6 @@ define('DB_PASSWORD', getenv('MYSQL_PASSWORD'));
 define('DB_ALBUM_TABLE', 'album');
 define('DB_USER_TABLE', 'user');
 define('DB_SONG_TABLE', 'song');
+define('COOKIE_AUTH_EXPIRE', 86400);
+define('COOKIE_AUTH_SECRET', 'menggokil');
 ?>

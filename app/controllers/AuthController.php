@@ -1,5 +1,76 @@
 <?php
 
+require_once __DIR__ . './../models/User.php';
+
+function setAuthCookie($id) {
+    $cookie_name = "COOKIE_AUTH";
+    $exp = time() + COOKIE_AUTH_EXPIRE;
+    $cookie_value = $id . "-" . $exp;
+    $cookie_value_encoded = base64_encode($cookie_value);
+    $cookie_value_hash = hash('sha256', $cookie_value . '-' . COOKIE_AUTH_SECRET); 
+    $cookie_value_token = $cookie_value_encoded . '.' . $cookie_value_hash;
+    setcookie($cookie_name, $cookie_value_token, $exp, "/");
+}
+
+function isValidAuthCookie($cookies) {
+    if(!isset($cookies['COOKIE_AUTH'])){
+        return false;
+    }
+    $cookie = $cookies['COOKIE_AUTH'];
+    $cookie_parts = explode('.', $cookie);
+    if(count($cookie_parts) != 2){
+        return false;
+    }
+    $cookie_value_encoded = $cookie_parts[0];
+    $cookie_value_hash = $cookie_parts[1];
+    $cookie_value = base64_decode($cookie_value_encoded);
+    if($cookie_value_hash !== hash('sha256', $cookie_value . '-' . COOKIE_AUTH_SECRET)){
+        return false;
+    }
+    $cookie_value_parts = explode('-', $cookie_value);
+    $id = $cookie_value_parts[0];
+    $exp = $cookie_value_parts[1];
+    if(empty($id) || time() >$exp) {
+        return false;
+    }
+    return $id;
+}
+
+function deleteAuthCookie() {
+    $cookie_name = "COOKIE_AUTH";
+    $cookie_value = "";
+    $cookie_value = base64_encode($cookie_value);
+    setcookie($cookie_name, $cookie_value, time() - COOKIE_AUTH_EXPIRE, "/");
+}
+
 $user_role = "admin";
+
+if(isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $user = new User();
+    $data = $user->getByUsername($username);
+    if($data) {
+        if(password_verify($password, $data['password'])) {
+            // session_destroy();
+            // session_start();
+            setAuthCookie($data['user_id']);
+            $_SESSION['user_id'] = $data['user_id'];
+            // $str = json_encode($data);
+            // echo $str; 
+            echo "login success";
+        } else {
+            echo "login failed";
+        }
+    } else {
+        echo "login failed";
+    }
+}
+
+if(isset($_POST['logout'])) {
+    deleteAuthCookie();
+    session_destroy();
+    echo "logout success";
+}
 
 ?>

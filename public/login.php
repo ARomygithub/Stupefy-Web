@@ -1,4 +1,11 @@
+<?php
+    session_start();
+    require_once __DIR__ . '/../app/controllers/AuthController.php';
 
+    if(isValidAuthCookie($_COOKIE)) {
+        header('Location: /');
+    }    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,11 +31,11 @@
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" placeholder="Password"/>
                     </div>
-                    <div id="div-button">
-                        <input type="submit" id="login-button" value="LOG IN"/>
-                    </div>
-                    <hr>
                 </form>
+                <div id="div-button">
+                    <input type="submit" id="login-button" value="LOG IN"/>
+                </div>
+                <hr>
             </div>
             <label class="label1">Don't have an account?</label>
             <div id="signup" href="signup.php">
@@ -37,4 +44,7 @@
         </div>
     </div>
 </body>
+<footer>
+    <script src="./js/login.js"></script>
+</footer>
 </html>
