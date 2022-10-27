@@ -5,16 +5,16 @@ window.onload = function(){
 
     xhr.onreadystatechange = function() { 
         if (xhr.readyState == 4 && xhr.status == 200) {
-            let contents = document.getElementsByClassName("contents")[0];
+            let contents = document.getElementsByClassName("content-album")[0];
             console.log(xhr.responseText);
             let result = JSON.parse(xhr.responseText);
-            contents.innerHTML = "<tr>Unfortunately, there is no album for you </tr>";
+            contents.innerHTML = "<p>Unfortunately, there is no album for you </p>";
             if (result[0] !== "") {
                 contents.innerHTML = result[0];
             }
         }
     }
-    url = "/app/controllers/AlbumController.php";
+    url = "/app/controllers/ListAlbumController.php";
 
     xhr.open("GET", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
