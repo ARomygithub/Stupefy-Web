@@ -65,6 +65,10 @@ function toogleSideBar(){
     sidebar.children[0].src = "/public/img/icons-"+sidebar.id +".png";
 }
 
+function getDetailedSong($id){
+    window.location.href = "/public/detail-song.php?id="+$id;
+}
+
 function updatePage(xhr) {
     let contents = document.getElementsByClassName("contents")[0];
     let response = JSON.parse(xhr.responseText);
