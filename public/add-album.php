@@ -11,7 +11,7 @@ $body = file_get_contents('./html/add-album.html');
 
 $user = getUserInformation();
 
-if(isset($user) && $user['isAdmin'] === 1){
+if(isset($user) && $user['isAdmin']){
     $sidebar = file_get_contents('./html/template/admin-sidebar.html');
     $nav = str_replace('{{ user }}', $user['username'], $nav);
     $nav = str_replace('{{ role }}', 'Admin' , $nav);

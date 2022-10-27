@@ -30,7 +30,7 @@
 
         $i=1;
         while(file_exists($song_file_path)){
-            $song_file_path = $song_file_directory .$song_file_name."($i)";
+            $song_file_path = $song_file_directory."($i)".$song_file_name;
             $i++;
         }
 
@@ -39,7 +39,7 @@
         if( $_FILES['thumbnail-image']['name'] != "" ) {
             $i=1;
             while(file_exists($thumbnail_path)){
-                $thumbnail_path = $thumbnail_directory .$song_file_name."($i)";
+                $thumbnail_path = $thumbnail_directory ."($i)".$thumbnail_file_name;
                 $i++;
             }
 

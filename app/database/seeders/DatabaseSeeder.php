@@ -32,6 +32,14 @@ function seed(){
     $db->bind(':isAdmin', 0);
     $db->execute();
 
+    $db->prepare('INSERT INTO user(email, password, username, name, isAdmin) VALUES(:email, :password, :username, :name, :isAdmin)');
+    $db->bind(':email', 'admin' . '@admin.com');
+    $db->bind(':password', password_hash('admin', PASSWORD_DEFAULT));
+    $db->bind(':username', 'admin');
+    $db->bind(':name', 'admin');
+    $db->bind(':isAdmin', 1);
+    $db->execute();
+
 
     /*
         Judul VARCHAR(64) NOT NULL,
@@ -55,14 +63,14 @@ function seed(){
        $db->bind(':Judul', generateRandomString());
        $db->bind(':Penyanyi', generateRandomString());
        $db->bind(':Total_duration', random_int(1, 1000));
-       $db->bind(':Image_path', '/storage/default-thumbnail.png');
+       $db->bind(':Image_path', '/storage/thumbnail/default-thumbnail.png');
        $db->bind(':Tanggal_terbit', '2021-01-01');
        $db->bind(':Genre', generateRandomString());
        $db->execute();
    }
 
 
-    $db->prepare('INSERT INTO song(judul, penyanyi, tanggal_terbit, genre, duration, audio_path, album_id) VALUES(:title, :artist, :tanggal_terbit, :genre, :duration, :audio_path, :album_id)');
+    $db->prepare('INSERT INTO song(judul, penyanyi, tanggal_terbit, genre, duration, audio_path, album_id, image_path) VALUES(:title, :artist, :tanggal_terbit, :genre, :duration, :audio_path, :album_id, :image_path)');
     for($i = 0; $i<100; $i++){
         $db->bind(':title', generateRandomString());
         $db->bind(':artist', generateRandomString());
@@ -70,6 +78,7 @@ function seed(){
         $db->bind(':genre', generateRandomString());
         $db->bind(':duration', random_int(1, 1000));
         $db->bind(':audio_path', '/storage/Believer.mp3');
+        $db->bind(':image_path', '/storage/thumbnail/default-thumbnail.png');
         $db->bind(':album_id', random_int(1, 100));
         $db->execute();
     }

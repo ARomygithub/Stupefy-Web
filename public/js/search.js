@@ -1,5 +1,5 @@
 let limit=10;
-let current_url="";
+let current_url=""; //tanpa offset & limit
 let itemName = "page-item";
 let current_page = 1;
 const debounce = (func, delay) => {
@@ -26,7 +26,7 @@ window.onload = function(){
     }
     url = "/app/controllers/SearchController.php";
     if(location.search!=="") {
-        url = url+location.search;
+        url = url+location.search+"&offset=0&limit="+limit.toString();
         current_url = location.search;
     } else {
         url = url+"?search=";
@@ -67,6 +67,7 @@ function updatePage(xhr) {
     let response = JSON.parse(xhr.responseText);
     if(response[0] !== "") {
         contents.innerHTML = response[0];
+        console.log("response[0]: "+response[0]);
         let countSong = response[1];
         let countPage = Math.ceil(countSong/limit);
         // testing doang
@@ -141,7 +142,7 @@ searchInput.addEventListener("keyup", debounce(function(event) {
     let url = "/app/controllers/SearchController.php?search="+keyword+"&offset=0&limit="+limit.toString();
     // cek komponen sort
     // cek komponen filter
-    current_url = "?search="+keyword+"&offset=0&limit="+limit.toString();
+    current_url = "?search="+keyword;
     xhr.onreadystatechange = function() { 
         if (xhr.readyState == 4 && xhr.status == 200) {
             current_page = 1;

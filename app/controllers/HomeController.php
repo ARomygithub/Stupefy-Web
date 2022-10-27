@@ -10,10 +10,6 @@
             $song['Genre'] = '-';
         }
 
-        if($song['Image_path'] == null){
-            $song['Image_path'] = '/storage/thumbnail/default-thumbnail.png';
-        }
-
         $id = $song['song_id'];
 
         $html = <<<"EOT"

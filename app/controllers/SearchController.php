@@ -29,7 +29,7 @@
     if(isset($_GET["search"])) {
         $searchValue = $_GET["search"];
         $searchBy = "all";
-        $order = "asc";
+        $order = "ASC";
         $orderby = "Judul";
         $genre = "all";
         $offset = 0;
@@ -47,15 +47,16 @@
             $genre = $_GET['genre'];
         }
         if(isset($_GET['offset'])) {
-            $offset = $_GET['offset'];
+            $offset = (int)$_GET['offset'];
         }
         if(isset($_GET['limit'])) {
-            $limit = $_GET['limit'];
+            $limit = (int)$_GET['limit'];
         }
         $song = new Song();
         if($searchBy==="all" && $genre==="all") {
             if($searchValue==="") {
-                $songs = $song->getWithOrder($offset, $limit, $orderby, $order);
+                // echo "tes";
+                $songs = $song->getWithOrder($offset, $limit*4, $orderby, $order);
             } else {
                 $songs = $song->search($searchValue, $order, $orderby, $offset, $limit*4); //cek 3 page berikutnya jg
             }
@@ -74,6 +75,6 @@
         }
         $data = [$cards, $count];
         echo json_encode($data);
-        // echo json_encode($song->getWithOrder(0,20,"Judul","asc"));
+        // echo json_encode([$song->getWithOrder(0,20,"Judul","ASC"),$count]);
     }
 ?>

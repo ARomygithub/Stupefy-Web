@@ -13,7 +13,7 @@
 
     if(isset($user)){
         $role = 'User';
-        if($user['isAdmin'] === 1){
+        if($user['isAdmin']){
             $sidebar = file_get_contents('./html/template/admin-sidebar.html');
             $role = 'Admin';
         }
@@ -36,7 +36,7 @@
         $body = str_replace('{{ release-date }}', $song_information['release-date'], $body);
         $body = str_replace('{{ song-duration }}', $song_information['song-duration'], $body);
         $body = str_replace('{{ song-file }}', $song_information['song-file'], $body);
-        $body = str_replace('{{ thumbnail }}', $song_information['thumbnail'], $body);
+        $body = str_replace('{{ thumbnail-image }}', $song_information['thumbnail'], $body);
         $body = str_replace('{{ song-album }}', $song_information['song-album'], $body);
     }
 
