@@ -111,7 +111,7 @@ class Song{
                 return $this->db->getAll();
             }
             else{
-                $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE penyanyi = :penyanyi AND album_id IS NULL AND song_id NOT ("
+                $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE penyanyi = :penyanyi AND album_id IS NULL AND song_id NOT IN ("
                 . implode(',',$array_of_disabled) . ")");
                 $this->db->bind(':penyanyi', $penyanyi);
     
@@ -121,9 +121,35 @@ class Song{
         
     }
 
+    public function totalCount($albumSongs){
+        if(count($albumSongs) == 0){
+            $this->db->prepare("SELECT SUM(Duration) AS Total_duration FROM $this->table");
+            return $this->db->getOne();
+        }
+        else{
+            $this->db->prepare("SELECT SUM(Duration) AS total FROM $this->table WHERE song_id IN ("
+            . implode(',',$albumSongs) . ")");
+            return $this->db->getOne();
+        }
+    }
 
+    public function updateAlbumID($albumSongs, $album_id){
+        if(count($albumSongs) == 0){
+            return true;
+        }
+        else{
+            $this->db->prepare("UPDATE $this->table SET album_id = :album_id WHERE song_id IN ("
+            . implode(',',$albumSongs) . ")");
+            $this->db->bind(':album_id', $album_id);
+            return $this->db->execute();
+        }
+    }
 
-
+    public function getArtistByID($id){
+        $this->db->prepare("SELECT penyanyi FROM $this->table WHERE song_id = :id");
+        $this->db->bind(':id', $id);
+        return $this->db->getOne();
+    }
 }
 
 ?>

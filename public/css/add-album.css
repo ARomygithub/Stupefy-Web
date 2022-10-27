@@ -6,14 +6,20 @@
 #song-table{
     background-color: #404040;
     color: white;
-    outline: none;
     width: 100%;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
     line-height: 29px;
-    border-spacing: 0;
+}
+
+#song-table .content-entry:hover{
+    cursor: context-menu !important;
+}
+
+#song-table .content-entry{
+    border-spacing: 20px !important;
 }
 
 #song-table .content-artist{
@@ -31,7 +37,6 @@
 
 
 
-
 #song-table td{
     padding: 10px;
 }
@@ -41,7 +46,9 @@
     color: white;;
 }
 
-
+.delete-icon:hover{
+    cursor: pointer;
+}
 
 
 .content-img-container{
@@ -56,6 +63,14 @@
     object-fit: cover;
 }
 
-.delete{
+.content-action{
     width: 60px;
+}
+
+.delete-button{
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
 }

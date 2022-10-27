@@ -85,17 +85,19 @@ function changeSongAlbum(event){
     let songTable = document.getElementById("song-table");
     formData = new FormData();
     formData.append("songID", event.target.value);
-    formData.append("album-artist", albumArtist.value);
+    // formData.append("album-artist", albumArtist.value);
 
     let songList = [];
 
-    for(var i=0; i<currentSongs.length-1; i++){
-        songList.push(parseInt(currentSongs[i].innerHTML));
+
+
+    for(var i=0; i<currentSongs.length; i++){
+        // console.log(currentSongs[i].value);
+        songList.push(parseInt(currentSongs[i].value));
     }
     songList.push(parseInt(event.target.value));
 
     formData.append("Song[]", songList);
-
     formData.append("Query", true);
 
     for(var pair of formData.entries()) {
@@ -117,8 +119,11 @@ function changeSongAlbum(event){
                     songTable.innerHTML += result[1];
                 }
 
-                albumArtist.value = result[2];
-                albumArtist.disabled = true;
+                if(result[2] !=""){
+                    albumArtist.value = result[2];
+                    albumArtist.disabled = true;
+                    songAlbum.value = "-1";
+                }
 
                 for(let i=0; i<document.getElementsByClassName('error-message').length; i++){
                     document.getElementsByClassName('error-message')[i].style.display = "none";
@@ -134,23 +139,88 @@ function changeSongAlbum(event){
     }
 }
 
+function deleteCurrentSong($id){
+    document.getElementById("song-table-row-"+$id).remove();
+
+    let songAlbum = document.getElementById("song-album");
+    let albumArtist = document.getElementById("album-artist");
+    let currentSongs = document.getElementsByClassName("song-table-id")
+    let songTable = document.getElementById("song-table");
+    formData = new FormData();
+    formData.append("song-id", $id);
+
+    let songList = [];
+
+    for(var i=0; i<currentSongs.length; i++){
+        songList.push(parseInt(currentSongs[i].value));
+    }
+
+    formData.append("Song[]", songList);
+    formData.append("Delete", true);
+
+    for(var pair of formData.entries()) {
+        console.log(pair[0]+ ', '+ pair[1]); 
+    }
+
+    if(event.target.value!=='-1'){
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+                let result = JSON.parse(xhr.responseText);
+                
+                if(currentSongs.length == 0){
+                    albumArtist.disabled = false;
+                    songAlbum.innerHTML = "<option value='' disabled>Select Songs</option>";
+                    songAlbum.innerHTML += "<option value='-1' selected>None</option>";
+                    if (result[0] !== "") {
+                        songAlbum.innerHTML += result[0];
+                    }
+                } else{
+                    songAlbum.innerHTML = "<option value='' disabled>Select Songs</option>";
+                    if (result[0] !== "") {
+                        songAlbum.innerHTML += result[0];
+                    }
+                }
+
+                for(let i=0; i<document.getElementsByClassName('error-message').length; i++){
+                    document.getElementsByClassName('error-message')[i].style.display = "none";
+                }
+            }
+        }
+
+        url = "/app/controllers/AlbumController.php";
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.send(formData);
+    }
+
+}
+
 
 
 function submitform(event){
     event.preventDefault();
-    let form = document.getElementById("add-song-form");
-    let audio = document.getElementById("add-audio");
+    let form = document.getElementById("add-album-form");
+    let currentSongs = document.getElementsByClassName("song-table-id") || [];
     let formData = new FormData(form);
 
-    if(!formData['song-artist']){
-        formData.append('song-artist', document.getElementById("song-artist").value);
+    let songList = [];
+
+    for(var i=0; i<currentSongs.length; i++){
+        songList.push(parseInt(currentSongs[i].value));
+    }
+
+    formData.append("Song[]", songList);
+    formData.append("Submit", true);
+
+    if(!formData['album-artist']){
+        formData.append('album-artist', document.getElementById("album-artist").value);
     }
 
     if(validateForm(formData)){
         formData.append("duration", audio.duration);
-        formData.append("add-song-form", true);
-
-
 
         let xhr = new XMLHttpRequest();
 
@@ -168,7 +238,7 @@ function submitform(event){
                 }
             }
         }
-        url = "/app/controllers/SongController.php";
+        url = "/app/controllers/AlbumController.php";
 
         xhr.open("POST", url, true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -180,34 +250,35 @@ function submitform(event){
 
 function validateForm(form){
     let error = false;
-    let songName = form.get("song-title");
-    let songReleaseDate = form.get("release-date");
-    let songFile = form.get("song-file");
+    let albumName = form.get("album-title");
+    let albumReleaseDate = form.get("release-date");
+    let thumbnail = form.get("thumbnail");
 
 
-    if(songName === ""){
-        document.getElementById("song-title-error").innerHTML = "Song title is required";
-        document.getElementById("song-title-error").style.display = "block";
+    if(albumName === ""){
+        document.getElementById("album-title-error").innerHTML = "Album title is required";
+        document.getElementById("album-title-error").style.display = "block";
         error = true;
     } else{
-        document.getElementById("song-title-error").style.display = "none";
+        document.getElementById("album-title-error").style.display = "none";
     }
 
-    if(songReleaseDate === ""){
-        document.getElementById("release-date-error") .innerHTML= "Song release date is required";
+    if(albumReleaseDate === ""){
+        document.getElementById("release-date-error") .innerHTML= "Album release date is required";
         document.getElementById("release-date-error").style.display = "block";
         error = true;
     } else{
         document.getElementById("release-date-error").style.display = "none";
     }
 
-    if(songFile.value === ""){
-        document.getElementById("song-file-error").innerHTML = "Song file is required";
-        document.getElementById("song-file-error").style.display = "block";
+    if(thumbnail.value === ""){
+        document.getElementById("thumbnail-error").innerHTML = "Album file is required";
+        document.getElementById("thumbnail-error").style.display = "block";
         error = true;
     } else{
-        document.getElementById("song-file-error").style.display = "none";
+        document.getElementById("thumbnail-error").style.display = "none";
     }
 
     return !error;
 }
+

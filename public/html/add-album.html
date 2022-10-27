@@ -29,7 +29,7 @@
                             <div class="upload-button" onclick="getThumbnail()">Select File</div>
                         </div>
                         <input type="file" name="thumbnail-image" id="thumbnail-image" name="thumbnail-image"
-                            accept="image/*" onchange="previewThumbnail(event)" hidden required>
+                            accept="image/*" onchange="previewThumbnail(event)" hidden>
                         <div class="error-message" id="thumbnail-error">Salah</div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
 
                     <div class="input-container">
                         <label for="album-artist">Artist</label>
-                        <input type="text" name="album-artist" id="album-artist" placeholder="Album Artist" required>
+                        <input type="text" name="album-artist" id="album-artist" placeholder="Album Artist" value="" required>
                         <div class="error-message" id="album-artist-error">Salah</div>
                     </div>
                 </div>

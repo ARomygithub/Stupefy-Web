@@ -51,6 +51,28 @@ class Album{
         $this->db->bind(':album_id', $album_id);
         $this->db->execute();
     }
+
+    public function addAlbum($albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumSongs, $thumbnail_path, $album_duration){
+        $this->db->prepare("INSERT INTO $this->table (Judul, Penyanyi, Tanggal_terbit, Genre, Total_duration, Image_path) VALUES (:albumName, :albumArtist, :albumReleaseDate, :albumGenre, :album_duration, :thumbnail_path)");
+        $this->db->bind(':albumName', $albumName);
+        $this->db->bind(':albumArtist', $albumArtist);
+        $this->db->bind(':albumReleaseDate', $albumReleaseDate);
+        $this->db->bind(':albumGenre', $albumGenre);
+        $this->db->bind(':album_duration', $album_duration);
+        $this->db->bind(':thumbnail_path', $thumbnail_path);
+        return $this->db->execute();
+    }
+
+    public function getAlbumID($albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumSongs, $thumbnail_path, $album_duration){
+        $this->db->prepare("SELECT album_id FROM $this->table WHERE Judul = :albumName AND Penyanyi = :albumArtist AND Tanggal_terbit = :albumReleaseDate AND Genre = :albumGenre AND Total_duration = :album_duration AND Image_path = :thumbnail_path");
+        $this->db->bind(':albumName', $albumName);
+        $this->db->bind(':albumArtist', $albumArtist);
+        $this->db->bind(':albumReleaseDate', $albumReleaseDate);
+        $this->db->bind(':albumGenre', $albumGenre);
+        $this->db->bind(':album_duration', $album_duration);
+        $this->db->bind(':thumbnail_path', $thumbnail_path);
+        return $this->db->getOne();
+    }
 }
 
 ?>

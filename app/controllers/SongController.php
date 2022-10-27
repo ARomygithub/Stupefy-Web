@@ -17,14 +17,19 @@
         $thumbnail_directory = "./../../storage/thumbnail//";
         $song_file_directory = "./../../storage//";
 
-        $thumbnail_path = $thumbnail_directory . $_FILES['thumbnail-image']['name']; 
+        $thumbnail_name = str_replace(" ", "_", $_FILES['thumbnail-image']['name']);
+        $song_file_name = str_replace(" ", "_", $_FILES['song-file']['name']);
+
         
-        $song_file_path = $song_file_directory . $_FILES['song-file']['name'];
+
+        $thumbnail_path = $thumbnail_directory . $thumbnail_name;; 
+        
+        $song_file_path = $song_file_directory . $song_file_name;
 
 
         $i=1;
         while(file_exists($song_file_path)){
-            $song_file_path = $song_file_directory . $_FILES['song-file']['name']."($i)";
+            $song_file_path = $song_file_directory .$song_file_name."($i)";
             $i++;
         }
 
@@ -33,11 +38,11 @@
         if( $_FILES['thumbnail-image']['name'] != "" ) {
             $i=1;
             while(file_exists($thumbnail_path)){
-                $thumbnail_path = $thumbnail_directory . $_FILES['thumbnail-image']['name']."($i)";
+                $thumbnail_path = $thumbnail_directory .$song_file_name."($i)";
                 $i++;
             }
 
-            if(!move_uploaded_file($_FILES['thumbnail-image']['tmp_name'], $thumbnail_path)){
+            if(!move_uploaded_file(str_replace(' ', '_',$_FILES['thumbnail-image']['tmp_name']), $thumbnail_path)){
                 echo json_encode(['status' => 'thumbnail-error', 'message' => 'Failed to upload thumbnail image']);
                 $error = true;
             }
@@ -45,7 +50,7 @@
             $thumbnail_path = $thumbnail_directory . 'default-thumbnail.png';    
         }
 
-        if(!$error&& !move_uploaded_file($_FILES['song-file']['tmp_name'], $song_file_path)){
+        if(!$error&& !move_uploaded_file(str_replace(' ', '_', $_FILES['song-file']['tmp_name']), $song_file_path)){
             echo json_encode(['status' => 'song-file-error', 'message' => 'Failed to upload song file']);
             $error = true;
         }
