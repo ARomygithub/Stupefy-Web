@@ -17,7 +17,13 @@ class Song{
     }
 
     public function getByID($id){
-        $this->db->prepare("SELECT * FROM $this->table WHERE id = :id");
+        $this->db->prepare("SELECT * FROM $this->table WHERE song_id = :id");
+        $this->db->bind(':id', $id);
+        return $this->db->getOne();
+    }
+
+    public function getCardByID($id){
+        $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE song_id = :id");
         $this->db->bind(':id', $id);
         return $this->db->getOne();
     }
@@ -83,6 +89,36 @@ class Song{
         $this->db->bind(':duration', $duration);
 
         return $this->db->execute();
+    }
+
+    public function getAvailableSong($penyanyi, $array_of_disabled){
+
+        if($penyanyi == ''){
+            if(count($array_of_disabled) == 0){
+                $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE album_id IS NULL");
+                return $this->db->getAll();
+            }
+            else{
+                $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE album_id IS NULL AND song_id NOT IN ("
+                . implode(',',$array_of_disabled) . ")");
+                return $this->db->getAll();
+            }    
+        }
+        else{
+            if(count($array_of_disabled) == 0){
+                $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE penyanyi = :penyanyi AND album_id IS NULL");
+                $this->db->bind(':penyanyi', $penyanyi);
+                return $this->db->getAll();
+            }
+            else{
+                $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE penyanyi = :penyanyi AND album_id IS NULL AND song_id NOT ("
+                . implode(',',$array_of_disabled) . ")");
+                $this->db->bind(':penyanyi', $penyanyi);
+    
+                return $this->db->getAll();
+            }
+        }
+        
     }
 
 

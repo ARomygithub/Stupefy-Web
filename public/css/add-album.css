@@ -2,3 +2,60 @@
     width: 54px;
     height: 54px;
 }
+
+#song-table{
+    background-color: #404040;
+    color: white;
+    outline: none;
+    width: 100%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 29px;
+    border-spacing: 0;
+}
+
+#song-table .content-artist{
+    padding-top: 0px;
+}
+
+#song-table .content-id{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 34px;
+    text-align: center;
+}
+
+
+
+
+#song-table td{
+    padding: 10px;
+}
+
+#song-table .content-title {
+    padding-bottom: 0px;
+    color: white;;
+}
+
+
+
+
+.content-img-container{
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+}
+
+.content-img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.delete{
+    width: 60px;
+}

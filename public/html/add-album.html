@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/add-album.css">
-    <title>Stupefy | Add Album</title>
+    <title>Stupefy | Add Album </title>
 </head>
 
 <body>
@@ -17,20 +17,20 @@
             <div class="container-title">
                 Add New Album
             </div>
-            <form action="/app/controllers/AlbumController.php" method="POST" enctype="multipart/form-data"
-                class="contents">
+            <form enctype="multipart/form-data" class="contents" id="add-album-form">
                 <div class="input-group-0">
                     <img class="thumbnail" src="/storage/thumbnail/default-thumbnail.png" id="album-thumbnail" alt="thumbnail">
 
                     <div class="input-container">
-                        <label for="iamge">Upload Thumbnail</label>
+                        <label>Upload Thumbnail</label>
                         <div class="file-uploader">
                             <input type="text" name="thumbnail-path" id="thumbnail-path"
-                                placeholder="Select thumbnail image file" disabled required>
+                                placeholder="Select thumbnail image file" disabled>
                             <div class="upload-button" onclick="getThumbnail()">Select File</div>
                         </div>
                         <input type="file" name="thumbnail-image" id="thumbnail-image" name="thumbnail-image"
-                            accept="image/*" onchange="previewThumbnail(event)" hidden>
+                            accept="image/*" onchange="previewThumbnail(event)" hidden required>
+                        <div class="error-message" id="thumbnail-error">Salah</div>
                     </div>
                 </div>
 
@@ -38,11 +38,13 @@
                     <div class="input-container">
                         <label for="album-title">Title</label>
                         <input type="text" name="album-title" id="album-title" placeholder="Album Title" required>
+                        <div class="error-message" id="album-title-error">Salah</div>
                     </div>
 
                     <div class="input-container">
                         <label for="album-genre">Genre (Optional)</label>
                         <input type="text" name="album-genre" id="album-genre" placeholder="Album Genre">
+                        <div class="error-message" id="album-genre-error">Salah</div>
                     </div>
                 </div>
 
@@ -50,27 +52,33 @@
                     <div class="input-container">
                         <label for="release-date">Release Date</label>
                         <input type="date" name="release-date" id="release-date" placeholder="01/01/1992" required>
+                        <div class="error-message" id="release-date-error">Salah</div>
                     </div>
 
                     <div class="input-container">
                         <label for="album-artist">Artist</label>
                         <input type="text" name="album-artist" id="album-artist" placeholder="Album Artist" required>
+                        <div class="error-message" id="album-artist-error">Salah</div>
                     </div>
                 </div>
 
                 <div class="input-group-3">
                     <div class="input-container">
+                        <table class = "song-table" id ="song-table">
+                            
+                        </table>
                         <label for="songs">Choose Song to Add (Optional)</label>
                         <div class="field-with-icon">
                             <img src="img/icons-add-song-grey.png" alt="">
-                            <select name="song-album" id="song-album">
-                                <option value="0" disabled> Choose Song</option>
+                            <select name="song-album" id="song-album" value = "-1" onchange="changeSongAlbum(event)">
                             </select>
                         </div>
+                        <div class="error-message" id="song-album-error">Salah</div>
                     </div>
                 </div>
 
-                <input type="submit" value="Submit" name="submit-button" id="submit">
+                
+                <input type="submit" value="Submit" name="submit-button" id="submit" onclick="submitform(event)">
 
             </form>
         </div>

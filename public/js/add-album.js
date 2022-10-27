@@ -1,5 +1,30 @@
 window.onload = function() {
     toogleSideBar();
+    let xhr = new XMLHttpRequest();
+    let contents = document.getElementById("song-album");
+
+    xhr.onreadystatechange = function() { 
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            let result = JSON.parse(xhr.responseText);
+            
+            contents.innerHTML = "<option value='' disabled>Select Songs</option>";
+            contents.innerHTML += "<option value='-1''> None</option>";
+            if (result[0] !== "") {
+                contents.innerHTML += result[0];
+            }
+
+            for(let i=0; i<document.getElementsByClassName('error-message').length; i++){
+                document.getElementsByClassName('error-message')[i].style.display = "none";
+            }
+            
+        }
+    }
+    url = "/app/controllers/AlbumController.php";
+
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.send();
+    toogleSideBar();
 }
 
 function toogleSideBar(){
@@ -10,4 +35,179 @@ function toogleSideBar(){
     let sidebar = document.getElementById("add-album");
     sidebar.classList.add("active");
     sidebar.children[0].src = "/public/img/icons-"+sidebar.id +".png";
+}
+
+
+function getThumbnail(event){
+    document.getElementById("thumbnail-image").click();
+}
+
+
+function previewThumbnail(event){
+    let image = document.getElementById("thumbnail-image");
+    let thumbnail = document.getElementById("album-thumbnail");
+    let thumbnailPath = document.getElementById("thumbnail-path");
+
+    if(event.target.files[0].size > 2000000){
+        document.getElementById("thumbnail-error").innerHTML = "Thumbnail size must be less than 2MB";
+        document.getElementById("thumbnail-error").style.display = "block";
+        image.value = "";
+    } else{
+        document.getElementById("thumbnail-error").style.display = "none";
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+            var dataURL = reader.result;
+    
+            thumbnail.src = dataURL;
+            thumbnailPath.value = event.target.files[0].name;
+        };
+
+        reader.onerror = function (error) {
+            image.value = "";
+            console.log('Error: ', error);
+        };
+
+        reader.onabort = function (error) {
+            image.value = "";
+            console.log('Error: ', error);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+function changeSongAlbum(event){
+    let songAlbum = document.getElementById("song-album");
+    let albumArtist = document.getElementById("album-artist");
+    let currentSongs = document.getElementsByClassName("song-table-id")
+    let songTable = document.getElementById("song-table");
+    formData = new FormData();
+    formData.append("songID", event.target.value);
+    formData.append("album-artist", albumArtist.value);
+
+    let songList = [];
+
+    for(var i=0; i<currentSongs.length-1; i++){
+        songList.push(parseInt(currentSongs[i].innerHTML));
+    }
+    songList.push(parseInt(event.target.value));
+
+    formData.append("Song[]", songList);
+
+    formData.append("Query", true);
+
+    for(var pair of formData.entries()) {
+        console.log(pair[0]+ ', '+ pair[1]); 
+    }
+
+    if(event.target.value!=='-1'){
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+                let result = JSON.parse(xhr.responseText);
+                
+                songAlbum.innerHTML = "<option value='' disabled>Select Songs</option>";
+                if (result[0] !== "") {
+                    songAlbum.innerHTML += result[0];
+                }
+                if(result[1] !=""){
+                    songTable.innerHTML += result[1];
+                }
+
+                albumArtist.value = result[2];
+                albumArtist.disabled = true;
+
+                for(let i=0; i<document.getElementsByClassName('error-message').length; i++){
+                    document.getElementsByClassName('error-message')[i].style.display = "none";
+                }
+            }
+        }
+
+        url = "/app/controllers/AlbumController.php";
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.send(formData);
+    }
+}
+
+
+
+function submitform(event){
+    event.preventDefault();
+    let form = document.getElementById("add-song-form");
+    let audio = document.getElementById("add-audio");
+    let formData = new FormData(form);
+
+    if(!formData['song-artist']){
+        formData.append('song-artist', document.getElementById("song-artist").value);
+    }
+
+    if(validateForm(formData)){
+        formData.append("duration", audio.duration);
+        formData.append("add-song-form", true);
+
+
+
+        let xhr = new XMLHttpRequest();
+
+
+        xhr.onreadystatechange = function() { 
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+                let result = JSON.parse(xhr.responseText);
+                if(result['status'] === "success"){
+                    alert(result['message']);
+                    document.location.href = ".";
+                } else{
+                    document.getElementById(result['status']).innerHTML = result['message'];
+                    document.getElementById(result['status']).style.display = "block";
+                }
+            }
+        }
+        url = "/app/controllers/SongController.php";
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.send(formData);
+    }
+
+    
+}
+
+function validateForm(form){
+    let error = false;
+    let songName = form.get("song-title");
+    let songReleaseDate = form.get("release-date");
+    let songFile = form.get("song-file");
+
+
+    if(songName === ""){
+        document.getElementById("song-title-error").innerHTML = "Song title is required";
+        document.getElementById("song-title-error").style.display = "block";
+        error = true;
+    } else{
+        document.getElementById("song-title-error").style.display = "none";
+    }
+
+    if(songReleaseDate === ""){
+        document.getElementById("release-date-error") .innerHTML= "Song release date is required";
+        document.getElementById("release-date-error").style.display = "block";
+        error = true;
+    } else{
+        document.getElementById("release-date-error").style.display = "none";
+    }
+
+    if(songFile.value === ""){
+        document.getElementById("song-file-error").innerHTML = "Song file is required";
+        document.getElementById("song-file-error").style.display = "block";
+        error = true;
+    } else{
+        document.getElementById("song-file-error").style.display = "none";
+    }
+
+    return !error;
 }
