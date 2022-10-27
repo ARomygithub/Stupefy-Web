@@ -13,6 +13,16 @@
         {{ nav }}
         <div class="content">
             <div id="detail-album">
+                <img src="{{ album-thumbnail }}" class="thumbnail" />
+                <div class="main-info">
+                    <div class="album-title">{{ album-title }}</div>
+                    <div class="album-artist">{{ album-artist }}</div>
+                    <div class="duration">{{ duration }}</div>
+                </div>
+                <div class="empty-container"></div>
+                <div class="edit-container">
+                    <img src="/public/img/icons-edit-grey.png" class="edit"/>
+                </div>
             </div>
             <div class="contents">
             </div>

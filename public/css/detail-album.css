@@ -40,8 +40,15 @@ body {
     margin: 20px;
 }
 
+.empty-container {
+    flex: auto;
+}
 .song-image{
     aspect-ratio: 1;
     height: 50px;
     margin: 20px;
+}
+
+.edit:hover {
+    cursor: pointer;
 }

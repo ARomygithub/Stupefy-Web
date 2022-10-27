@@ -1,5 +1,5 @@
 window.onload = function(){
-    generateAlbumDetail("../storage/thumbnail/default-thumbnail.png", "Hehe", "hhhh", 3001);
+    //generateAlbumDetail("../storage/thumbnail/default-thumbnail.png", "Hehe", "hhhh", 3001);
     generateSong('../storage/thumbnail/default-thumbnail.png', 'Song Title');
 }
 
