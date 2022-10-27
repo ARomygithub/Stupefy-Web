@@ -84,7 +84,7 @@
         $id = $_POST["song-id"];
 
         if($currentSongs[0] == ""){
-            $availableSongs = $songs->getAvailableSong("", []);
+            $availableSongs = $songs->getAvailableSong(NULL, []);
         }
         else{
             $availableSongs = $songs->getAvailableSong($songs->getArtistByID($id)['penyanyi'], $currentSongs);
@@ -106,7 +106,7 @@
             $i++;
         }
 
-        if(!move_uploaded_file(str_replace(' ', '_', $_FILES['song-file']['tmp_name']), $thumbnail_file_path)){
+        if(!move_uploaded_file(str_replace(' ', '_', $_FILES['thumbnail-image']['tmp_name']), $thumbnail_path)){
             echo json_encode(['status' => 'thumbnail-error', 'message' => 'Failed to upload thumbnail file']);
         } else{
             $album = new Album();
@@ -117,10 +117,13 @@
             $albumReleaseDate = date('Y-m-d', strtotime($_POST["release-date"]));
             $albumGenre = $_POST["album-genre"] or NULL;
             $albumSongs = $_POST["Song"];
-            $album_duration = $songs->totalCount($albumSongs)['Total_duration'];
+            if($albumSongs[0] == ""){
+                $albumSongs = [];
+            }
+            $album_duration = $songs->totalCount($albumSongs)['total_duration'];
 
             $album->addAlbum($albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumSongs, $thumbnail_path, $album_duration);
-            $songs->updateAlbumID($albumSongs, $album->getAlbumID($albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumSongs, $thumbnail_path, $album_duration));
+            $songs->updateAlbumID($albumSongs, $album->getAlbumID($albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumSongs, $thumbnail_path, $album_duration)['album_id']);
 
             echo json_encode(['status' => 'success', 'message' => 'Album added successfully']);
 
@@ -132,7 +135,7 @@
 
     }
     else{
-        $songs = $songs->getAvailableSong('', []);
+        $songs = $songs->getAvailableSong(NULL, []);
         $cards = '';
         foreach ($songs as $song) {
             $cards .= createEntry($song);

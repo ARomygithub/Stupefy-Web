@@ -93,7 +93,7 @@ class Song{
 
     public function getAvailableSong($penyanyi, $array_of_disabled){
 
-        if($penyanyi == ''){
+        if(!isset($penyanyi)){
             if(count($array_of_disabled) == 0){
                 $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE album_id IS NULL");
                 return $this->db->getAll();
@@ -123,11 +123,10 @@ class Song{
 
     public function totalCount($albumSongs){
         if(count($albumSongs) == 0){
-            $this->db->prepare("SELECT SUM(Duration) AS Total_duration FROM $this->table");
-            return $this->db->getOne();
+            return array('total_duration' => 0);
         }
         else{
-            $this->db->prepare("SELECT SUM(Duration) AS total FROM $this->table WHERE song_id IN ("
+            $this->db->prepare("SELECT SUM(Duration) AS total_duration FROM $this->table WHERE song_id IN ("
             . implode(',',$albumSongs) . ")");
             return $this->db->getOne();
         }

@@ -123,6 +123,8 @@ function changeSongAlbum(event){
                     albumArtist.value = result[2];
                     albumArtist.disabled = true;
                     songAlbum.value = "-1";
+                } else{
+                    songAlbum.value = "-1";
                 }
 
                 for(let i=0; i<document.getElementsByClassName('error-message').length; i++){
@@ -158,9 +160,7 @@ function deleteCurrentSong($id){
     formData.append("Song[]", songList);
     formData.append("Delete", true);
 
-    for(var pair of formData.entries()) {
-        console.log(pair[0]+ ', '+ pair[1]); 
-    }
+   
 
     if(event.target.value!=='-1'){
         let xhr = new XMLHttpRequest();
@@ -176,11 +176,13 @@ function deleteCurrentSong($id){
                     if (result[0] !== "") {
                         songAlbum.innerHTML += result[0];
                     }
+                    albumArtist.value = "";
                 } else{
                     songAlbum.innerHTML = "<option value='' disabled>Select Songs</option>";
                     if (result[0] !== "") {
                         songAlbum.innerHTML += result[0];
                     }
+                    songAlbum.value = "-1";
                 }
 
                 for(let i=0; i<document.getElementsByClassName('error-message').length; i++){
@@ -215,13 +217,13 @@ function submitform(event){
     formData.append("Song[]", songList);
     formData.append("Submit", true);
 
-    if(!formData['album-artist']){
-        formData.append('album-artist', document.getElementById("album-artist").value);
+
+    for(var pair of formData.entries()) {
+        console.log(pair[0]+ ', '+ pair[1]); 
     }
 
     if(validateForm(formData)){
-        formData.append("duration", audio.duration);
-
+        console.log("Hello World!")
         let xhr = new XMLHttpRequest();
 
 
@@ -238,12 +240,18 @@ function submitform(event){
                 }
             }
         }
+
+        xhr.onerror = function() {
+            console.log("Error");
+        }
         url = "/app/controllers/AlbumController.php";
 
         xhr.open("POST", url, true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.send(formData);
     }
+
+
 
     
 }
@@ -252,7 +260,8 @@ function validateForm(form){
     let error = false;
     let albumName = form.get("album-title");
     let albumReleaseDate = form.get("release-date");
-    let thumbnail = form.get("thumbnail");
+    let thumbnail = form.get("thumbnail-image");
+    let albumArtist = form.get("album-artist");
 
 
     if(albumName === ""){
@@ -271,6 +280,7 @@ function validateForm(form){
         document.getElementById("release-date-error").style.display = "none";
     }
 
+
     if(thumbnail.value === ""){
         document.getElementById("thumbnail-error").innerHTML = "Album file is required";
         document.getElementById("thumbnail-error").style.display = "block";
@@ -278,6 +288,15 @@ function validateForm(form){
     } else{
         document.getElementById("thumbnail-error").style.display = "none";
     }
+
+    if(albumArtist === ""){
+        document.getElementById("album-artist-error").innerHTML = "Album artist is required";
+        document.getElementById("album-artist-error").style.display = "block";
+        error = true;
+    } else{
+        document.getElementById("album-artist-error").style.display = "none";
+    }
+
 
     return !error;
 }
