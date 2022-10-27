@@ -1,21 +1,4 @@
 <?php
-    function echo_detail_album($title = "Album Title", $artist = "Artist", $total_duration = 0){
-        $secs = $total_duration%60;
-        $mins = intdiv($total_duration,60)%60;
-        $hour = intdiv($total_duration,3600);
-        $html = <<<"EOT"
-            <div id="detail-album">
-                <div style="background-color: white; aspect-ratio: 1; width: 200px; margin: 20px;"></div>
-                <div class="main-info">
-                    <div class="album-title">$title</div>
-                    <div class="artist">$artist</div>
-                    <div class="duration">$hour Hours $mins Minutes $secs Seconds</div>
-                </div>
-            </div>
-        EOT;
-
-        echo $html;
-    }
 
     function echo_song($title = "Song Title"){
         $html = <<<"EOT"
