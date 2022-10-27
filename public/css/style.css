@@ -140,7 +140,7 @@ input:-webkit-autofill:active{
     
 }
 
-.nav-content form .logout{
+.nav-content .logout{
     text-decoration: none;
     font-family: 'Inter';
     font-style: normal;
@@ -152,7 +152,12 @@ input:-webkit-autofill:active{
     padding: 12px 20px;
     border-radius: 100px 100px 100px 100px;
     vertical-align: middle;
-    margin-top: 17px;
+    white-space: nowrap;
+}
+
+.nav-content .logout:hover{
+    background-color: #A41414;
+    cursor: pointer;
 }
 
 
