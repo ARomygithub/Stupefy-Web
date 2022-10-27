@@ -55,7 +55,7 @@ function seed(){
        $db->bind(':Judul', generateRandomString());
        $db->bind(':Penyanyi', generateRandomString());
        $db->bind(':Total_duration', random_int(1, 1000));
-       $db->bind(':Image_path', '/storage/default-thumbnail.png');
+       $db->bind(':Image_path', '/storage/thumbnail/default-thumbnail.png');
        $db->bind(':Tanggal_terbit', '2021-01-01');
        $db->bind(':Genre', generateRandomString());
        $db->execute();
