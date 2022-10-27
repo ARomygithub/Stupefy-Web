@@ -1,5 +1,5 @@
 <?php
-    require_once __DIR__ . '/../app/models/Song.php';
+    require_once __DIR__ . '/../models/Song.php';
 
     function createEntry($song, $i){
         if(!isset($song['Penyanyi'])){
@@ -30,7 +30,7 @@
         $searchValue = $_GET["search"];
         $searchBy = "all";
         $order = "asc";
-        $orderby = "title";
+        $orderby = "Judul";
         $genre = "all";
         $offset = 0;
         $limit = 10;
@@ -54,7 +54,11 @@
         }
         $song = new Song();
         if($searchBy==="all" && $genre==="all") {
-            $songs = $song->search($searchValue, $order, $orderby, $offset, $limit*4); //cek 3 page berikutnya jg
+            if($searchValue==="") {
+                $songs = $song->getWithOrder($offset, $limit, $orderby, $order);
+            } else {
+                $songs = $song->search($searchValue, $order, $orderby, $offset, $limit*4); //cek 3 page berikutnya jg
+            }
         }
         // } else if($searchBy==="all" && $genre!=="all") {
         //     $songs = $song->searchByGenre($searchValue, $genre, $order, $orderby);
@@ -70,5 +74,6 @@
         }
         $data = [$cards, $count];
         echo json_encode($data);
+        // echo json_encode($song->getWithOrder(0,20,"Judul","asc"));
     }
 ?>

@@ -12,6 +12,7 @@ const debounce = (func, delay) => {
     }
 };
 
+//komen dulu buat frontend
 window.onload = function(){
     toogleSideBar();
     
@@ -23,8 +24,13 @@ window.onload = function(){
         }
     }
     url = "/app/controllers/SearchController.php";
-    url = url+location.search;
-    current_url = location.search;
+    if(location.search!=="") {
+        url = url+location.search;
+        current_url = location.search;
+    } else {
+        url = url+"?search=";
+        current_url="?search=";
+    }
 
     xhr.open("GET", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -62,6 +68,7 @@ function updatePage(xhr) {
         contents.innerHTML = response[0];
         let countSong = response[1];
         let countPage = Math.ceil(countSong/limit);
+        console.log("count page: "+countPage);
         generatePagination(countPage);
     } else {
         contents.innerHTML = "<tr> Unfortunately, there is no song that matched </tr>";
@@ -74,20 +81,23 @@ function generatePagination(countPage) {
     pagination.innerHTML = "";
     // page 1
     // pagination.innerHTML += "<li class='page-item active'>1</li>";
-    addPagination(pagination,1);
-    // page ... atau cur-2,cur-1,cur
-    if(current_page>4) {
-        pagination.innerHTML += "<li class='page-item'>...</li>";
-    }
-    for(let i=max(2,current_page-2);i<=current_page;i++) {
-        addPagination(pagination,i);
-    }
-    // page cur+1,cur+2, ...
-    for(let i=current_page+1;i<=min(current_page+countPage-1,current_page+2);i++) {
-        addPagination(pagination,i);
-    }
-    if(countPage>3) {
-        pagination.innerHTML += "<li class='page-item'>...</li>";
+    if(countPage > 1 || current_page>1) {
+        addPagination(pagination,1);
+        // page ... atau cur-2,cur-1,cur
+        if(current_page>4) {
+            pagination.innerHTML += "<li class='page-item'>...</li>";
+        }
+        for(let i=Math.max(2,current_page-2);i<=current_page;i++) {
+            addPagination(pagination,i);
+        }
+        console.log("pagination line 92: "+pagination.innerHTML);
+        // page cur+1,cur+2, ...
+        for(let i=current_page+1;i<=Math.min(current_page+countPage-1,current_page+2);i++) {
+            addPagination(pagination,i);
+        }
+        if(countPage>3) {
+            pagination.innerHTML += "<li class='page-item'>...</li>";
+        }
     }
 }
 

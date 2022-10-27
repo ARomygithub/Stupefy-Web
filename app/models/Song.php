@@ -57,7 +57,7 @@ class Song{
     }
 
     public function getWithOrder($offset, $limit, $order_by, $order = 'ASC'){
-        $this->db->prepare("SELECT * FROM $this->table ORDER BY :order_by :order LIMIT :offset, :limit");
+        $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table ORDER BY :order_by :order LIMIT :offset, :limit");
         $this->db->bind(':offset', $offset);
         $this->db->bind(':limit', $limit);
         $this->db->bind(':order_by', $order_by);
