@@ -5,6 +5,7 @@
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/search.css">
     <title>Stupefy | Home</title>
 </head>
 
@@ -14,6 +15,28 @@
         {{ nav }}
         <div class="content">
             <div class="container-title">
+            </div>
+            <div class="sort-filter">
+                <div class="sort">
+                    <label for="sort">Sort by</label>
+                    <select name="sort" id="sort-select">
+                        <option value="Judul ASC">Title ASC</option>
+                        <option value="Judul DESC">Title DESC</option>
+                        <option value="Tahun ASC">Year ASC</option>
+                        <option value="Tahun DESC">Year DESC</option>
+                    </select>
+                </div>
+                <div class="filter">
+                    <label for="filter">Filter genre:</label>
+                    <select name="filter" id="filter-select">
+                        <option value="Genre">Genre</option>
+                        <option value="Anime">Anime</option>
+                        <option value="Kids">Kids</option>
+                        <option value="Depression">Depression</option>
+                        <option value="Pop">Pop</option>
+                        <option value="Rock">Rock</option>
+                    </select>
+                </div>
             </div>
             <table class="contents">
             </table>
@@ -26,7 +49,7 @@
                 <li class="page-item" href="#"><div class="active">6</div></li>
                 <li class="page-item" href="#"><div class="active">7</div></li>
                 <li class="page-item" href="#">....</li> -->
-            <ul>
+                </ul>
         </div>
 
     </div>

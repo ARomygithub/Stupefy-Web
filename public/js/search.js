@@ -28,9 +28,12 @@ window.onload = function(){
     if(location.search!=="") {
         url = url+location.search+"&offset=0&limit="+limit.toString();
         current_url = location.search;
+        let judul = new URLSearchParams(location.search).get("search");
+        document.getElementsByClassName("container-title")[0].innerHTML = "Search for \""+judul+"\"";
     } else {
         url = url+"?search=";
         current_url="?search=";
+        document.getElementsByClassName("container-title")[0].innerHTML = "All songs";
     }
 
     xhr.open("GET", url, true);
@@ -177,3 +180,57 @@ searchInput.addEventListener("keyup", debounce(function(event) {
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     xhr.send();
 },1000));
+
+let sort_select = document.getElementById("sort-select");
+sort_select.addEventListener("change", function() {
+    let xhr = new XMLHttpRequest();
+    let keyword = document.getElementById("search-input").value;
+    let orderQry =  this.value.split(" ");
+    console.log(orderQry);
+    let filterGenre = document.getElementById("filter-select").value;
+    let orderby = orderQry[0];
+    let order = orderQry[1];
+    let url = "/app/controllers/SearchController.php?search="+keyword+"&orderby="+orderby+"&order="+order;
+    current_url = "?search="+keyword+"&orderby="+orderby+"&order="+order;
+    if(filterGenre!=="Genre") {
+        url += "&genre="+filterGenre;
+        current_url += "&genre="+filterGenre;
+    }
+    url +="&offset=0&limit="+limit.toString();
+    xhr.onreadystatechange = function() { 
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            current_page = 1;
+            // let judul = 
+            updatePage(xhr);
+        }
+    }
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.send();
+});
+
+let filter_genre = document.getElementById("filter-select");
+filter_genre.addEventListener("change", function() {
+    let xhr = new XMLHttpRequest();
+    let keyword = document.getElementById("search-input").value;
+    let genre = this.value;
+    let orderQry = document.getElementById("sort-select").value.split(" ");
+    let orderby = orderQry[0];
+    let order = orderQry[1];
+    let url = "/app/controllers/SearchController.php?search="+keyword+"&orderby="+orderby+"&order="+order;
+    current_url = "?search="+keyword+"&orderby="+orderby+"&order="+order;
+    if(genre!=="Genre") {
+        url += "&genre="+genre;
+        current_url += "&genre="+genre;
+    }
+    url +="&offset=0&limit="+limit.toString();
+    xhr.onreadystatechange = function() { 
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            current_page = 1;
+            updatePage(xhr);
+        }
+    }
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.send();
+});

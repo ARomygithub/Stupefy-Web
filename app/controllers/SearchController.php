@@ -76,6 +76,12 @@
             } else {
                 $songs = $song->search($searchValue, $order, $orderby, $offset, $limit*4); //cek 3 page berikutnya jg
             }
+        } else if($genre!== "all") {
+            if($searchValue==="") {
+                $songs = $song->getWithOrderAndGenre($genre, $order, $orderby, $offset, $limit*4);
+            } else {
+                $songs = $song->searchWithGenre($searchValue, $genre, $order, $orderby, $offset, $limit*4);
+            }
         }
         // } else if($searchBy==="all" && $genre!=="all") {
         //     $songs = $song->searchByGenre($searchValue, $genre, $order, $orderby);
