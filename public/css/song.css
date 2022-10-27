@@ -38,7 +38,7 @@ audio{
     margin-top: 30px;
 }
 
-#check-album-button {
+.check-album-button {
     display: inline-block;
     background-color: #1DB954;
     height: 50px;
@@ -55,7 +55,24 @@ audio{
     white-space: nowrap;
 }
 
-#check-album-button:hover{
+.check-album-button-disabled {
+    display: inline-block;
+    background-color: #636363;
+    height: 50px;
+    padding: 0 22px;
+    color: white;
+    border-radius: 20px;
+    width: fit-content;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    padding-top: 14px;
+    white-space: nowrap;
+}
+
+.check-album-button:hover{
     background-color: #1ED760;
     cursor: pointer;
 }
