@@ -1,6 +1,4 @@
 <?php
-    require_once __DIR__ . '/../app/models/Album.php';
-
     function echo_card($title = "Album Title", $artist = "Artist", $year = "1970", $genre = "Music", $image_src = "../storage/default-song-thumbnail.png"){
         $html = <<<"EOT"
             <div class="card">

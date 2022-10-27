@@ -66,7 +66,7 @@ class Song{
         return $this->db->getAll();
     }
 
-    public function search($keyword, $offset, $limit){
+    public function search($keyword, $order, $orderby, $offset, $limit){
         $this->db->prepare("SELECT * FROM $this->table 
         WHERE (judul LIKE :keyword OR penyanyi LIKE :keyword or CAST(YEAR(tanggal_terbit) AS VARCHAR) LIKE :keyword)
         LIMIT :offset, :limit");
