@@ -57,21 +57,25 @@ class Song{
     }
 
     public function getWithOrder($offset, $limit, $order_by, $order = 'ASC'){
-        $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table ORDER BY :order_by :order LIMIT :offset, :limit");
+        $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM {$this->table} ORDER BY $order_by $order LIMIT :offset, :limit");
+        // $this->db->bind(':order_by', $order_by);
+        // $this->db->bind(':order', $order);
         $this->db->bind(':offset', $offset);
         $this->db->bind(':limit', $limit);
-        $this->db->bind(':order_by', $order_by);
-        $this->db->bind(':order', $order);
+        // $this->db->bind(':order_by', 'Judul');
+        // // $this->db->bind(':order', "ASC");
+        // $this->db->bind(':offset', 0);
+        // $this->db->bind(':limit', 20);        
 
         return $this->db->getAll();
     }
 
     public function search($keyword, $order, $orderby, $offset, $limit){
-        $this->db->prepare("SELECT * FROM $this->table 
-        WHERE (judul LIKE :keyword OR penyanyi LIKE :keyword or CAST(YEAR(tanggal_terbit) AS VARCHAR) LIKE :keyword)
-        LIMIT :offset, :limit");
+        $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE (Judul LIKE :keyword OR penyanyi LIKE :keyword or YEAR(tanggal_terbit) LIKE :keyword) ORDER BY $orderby $order LIMIT :offset, :limit");
         
         $this->db->bind(':keyword', "%$keyword%");
+        // $this->db->bind(':orderby', "$orderby");
+        // $this->db->bind(':order', "$order");
         $this->db->bind(':offset', $offset);
         $this->db->bind(':limit', $limit);
         return $this->db->getAll();
