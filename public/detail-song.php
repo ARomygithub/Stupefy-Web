@@ -13,7 +13,7 @@
 
     if(isset($user)){
         $role = 'User';
-        if($user['isAdmin'] === 1){
+        if($user['isAdmin']){
             $sidebar = file_get_contents('./html/template/admin-sidebar.html');
             $role = 'Admin';
         }

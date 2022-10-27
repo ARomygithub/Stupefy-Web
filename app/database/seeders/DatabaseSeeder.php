@@ -32,6 +32,14 @@ function seed(){
     $db->bind(':isAdmin', 0);
     $db->execute();
 
+    $db->prepare('INSERT INTO user(email, password, username, name, isAdmin) VALUES(:email, :password, :username, :name, :isAdmin)');
+    $db->bind(':email', 'admin' . '@admin.com');
+    $db->bind(':password', password_hash('admin', PASSWORD_DEFAULT));
+    $db->bind(':username', 'admin');
+    $db->bind(':name', 'admin');
+    $db->bind(':isAdmin', 1);
+    $db->execute();
+
 
     /*
         Judul VARCHAR(64) NOT NULL,
