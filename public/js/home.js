@@ -31,3 +31,7 @@ function toogleSideBar(){
     sidebar.children[0].src = "/public/img/icons-"+sidebar.id +".png";
 }
 
+function getDetailedSong($id){
+    window.location.href = "/public/detail-song.php?id="+$id;
+}
+

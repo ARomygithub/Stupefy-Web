@@ -8,12 +8,13 @@
         return $entry;
     }
 
-    $albums = new Album();
     if(isset($_GET['album'])){
+        $albums = new Album();
         $albums = $albums->getByID(intval($_GET['album']));
         $cards = $albums['Penyanyi'];
         echo json_encode([$cards]);
     } else if(isset($_POST['add-song-form'])){
+        $albums = new Album();
         $thumbnail_directory = "./../../storage/thumbnail//";
         $song_file_directory = "./../../storage//";
 
@@ -82,6 +83,7 @@
         }
     } 
     else{
+        $albums = new Album();
         $albums = $albums->getAlbumSortByArtist();
         $cards = '';
         foreach ($albums as $album) {
@@ -89,4 +91,6 @@
         }
         echo json_encode([$cards]);
     }
+
+?>
     
