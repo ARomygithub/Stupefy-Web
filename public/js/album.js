@@ -30,3 +30,7 @@ function toggleSideBar(){
     sidebar.classList.add("active");
     sidebar.children[0].src = "/public/img/icons-"+sidebar.id +".png";
 }
+
+function getDetailedAlbum($id){
+    window.location.href = "/public/detail-album.php?id="+$id;
+}

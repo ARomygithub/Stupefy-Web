@@ -11,7 +11,7 @@
 
         $id = $album['album_id'];
         $html = <<<"EOT"
-            <div class="card">
+            <div class="card" onclick="getDetailedAlbum($id)">
                 <div class="image-container">
                     <image src="$album[Image_path]" />
                 </div>
