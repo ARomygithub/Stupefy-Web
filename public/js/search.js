@@ -20,6 +20,7 @@ window.onload = function(){
     
     xhr.onreadystatechange = function() { 
         if (xhr.readyState == 4 && xhr.status == 200) {
+            current_page = 1;
             updatePage(xhr);
         }
     }
@@ -68,6 +69,9 @@ function updatePage(xhr) {
         contents.innerHTML = response[0];
         let countSong = response[1];
         let countPage = Math.ceil(countSong/limit);
+        // testing doang
+        // current_page = 6;
+        // let countPage = 10;
         console.log("count page: "+countPage);
         generatePagination(countPage);
     } else {
@@ -88,8 +92,11 @@ function generatePagination(countPage) {
             pagination.innerHTML += "<li class='page-item'>...</li>";
         }
         for(let i=Math.max(2,current_page-2);i<=current_page;i++) {
+            console.log("i: "+i);
             addPagination(pagination,i);
         }
+        pagination.lastElementChild.style.backgroundColor = "#1DB954";
+        pagination.lastElementChild.style.color = "#000";
         console.log("pagination line 92: "+pagination.innerHTML);
         // page cur+1,cur+2, ...
         for(let i=current_page+1;i<=Math.min(current_page+countPage-1,current_page+2);i++) {
@@ -102,10 +109,14 @@ function generatePagination(countPage) {
 }
 
 function addPagination(pagination,page) {
+    console.log("page: "+page);
     let pageItem = document.createElement("li");
     pageItem.classList.add("page-item");
-    pageItem.classList.add("active");
-    pageItem.innerHTML = toString(page);
+    let pageItemChild = document.createElement("div");
+    pageItemChild.classList.add("active");
+    pageItemChild.innerHTML = page.toString();
+    console.log(pageItemChild.innerHTML);
+    pageItem.appendChild(pageItemChild);
     pagination.appendChild(pageItem);
     pageItem.addEventListener("click", function() {
         let xhr = new XMLHttpRequest();
@@ -115,7 +126,7 @@ function addPagination(pagination,page) {
                 updatePage(xhr);
             }
         };
-        let url = "/app/controllers/SearchController.php" +current_url+"&offset="+toString((page-1)*limit)+"&limit="+toString(limit);
+        let url = "/app/controllers/SearchController.php" +current_url+"&offset="+((page-1)*limit).toString()+"&limit="+limit.toString();
         xhr.open("GET", url, true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.send();
@@ -127,10 +138,10 @@ let searchInput = document.getElementById("search-input");
 searchInput.addEventListener("keyup", debounce(function(event) {
     let xhr = new XMLHttpRequest();
     let keyword = document.getElementById("search-input").value;
-    let url = "/app/controllers/SearchController.php?search="+keyword+"&offset=0&limit="+toString(limit);
+    let url = "/app/controllers/SearchController.php?search="+keyword+"&offset=0&limit="+limit.toString();
     // cek komponen sort
     // cek komponen filter
-    current_url = "?search="+keyword+"&offset=0&limit="+toString(limit);
+    current_url = "?search="+keyword+"&offset=0&limit="+limit.toString();
     xhr.onreadystatechange = function() { 
         if (xhr.readyState == 4 && xhr.status == 200) {
             current_page = 1;
