@@ -46,3 +46,7 @@ generateSong = function(img_src, title){
     detail_song.appendChild(title_song);
     contents.appendChild(detail_song);
 }
+
+function getDetailedSong($id){
+    window.location.href = "/public/detail-song.php?id="+$id;
+}
