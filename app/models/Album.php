@@ -39,6 +39,12 @@ class Album{
         return $this->db->getAll();
     }
 
+    public function getTemplated($offset, $limit){
+        $this->db->prepare("SELECT album_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table ORDER BY last_updated DESC LIMIT :offset, :limit");
+        $this->db->bind(':offset', $offset);
+        $this->db->bind(':limit', $limit);
+        return $this->db->getAll();
+    }
 
     public function getAlbumSortByArtist(){
         $this->db->prepare("SELECT * FROM $this->table ORDER BY Penyanyi");

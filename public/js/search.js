@@ -77,6 +77,8 @@ function updatePage(xhr) {
         generatePagination(countPage);
     } else {
         contents.innerHTML = "<tr> Unfortunately, there is no song that matched </tr>";
+        pagination = document.getElementsByClassName("pagination")[0];
+        pagination.innerHTML = "";
     }
 }
 
@@ -84,13 +86,20 @@ function updatePage(xhr) {
 function generatePagination(countPage) {
     let pagination = document.getElementsByClassName("pagination")[0];
     pagination.innerHTML = "";
+    //coba pake cara lain
+    // while(pagination.lastChild) {
+    //     pagination.removeChild(pagination.lastChild);
+    // }
     // page 1
     // pagination.innerHTML += "<li class='page-item active'>1</li>";
     if(countPage > 1 || current_page>1) {
         addPagination(pagination,1);
         // page ... atau cur-2,cur-1,cur
         if(current_page>4) {
-            pagination.innerHTML += "<li class='page-item'>...</li>";
+            let last = document.createElement("li");
+            last.classList.add("page-item");
+            last.innerHTML = "...";
+            pagination.appendChild(last);  
         }
         for(let i=Math.max(2,current_page-2);i<=current_page;i++) {
             console.log("i: "+i);
@@ -100,11 +109,15 @@ function generatePagination(countPage) {
         pagination.lastElementChild.style.color = "#000";
         console.log("pagination line 92: "+pagination.innerHTML);
         // page cur+1,cur+2, ...
-        for(let i=current_page+1;i<=Math.min(current_page+countPage-1,current_page+2);i++) {
+        for(let i=current_page+1;i<=Math.min(current_page+countPage-1,current_page+2);i++) { //ohh salah, kl current = last_page-1,count_page=2
             addPagination(pagination,i);
         }
         if(countPage>3) {
-            pagination.innerHTML += "<li class='page-item'>...</li>";
+            // pagination.innerHTML += "<li class='page-item'>...</li>";
+            let last = document.createElement("li");
+            last.classList.add("page-item");
+            last.innerHTML = "...";
+            pagination.appendChild(last);            
         }
     }
 }
@@ -119,6 +132,7 @@ function addPagination(pagination,page) {
     console.log(pageItemChild.innerHTML);
     pageItem.appendChild(pageItemChild);
     pagination.appendChild(pageItem);
+    
     pageItem.addEventListener("click", function() {
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
@@ -127,11 +141,20 @@ function addPagination(pagination,page) {
                 updatePage(xhr);
             }
         };
+        xhr.onerror = function() {
+            console.log("error");
+        };
+        xhr.onabort = function() {
+            console.log("abort");
+        }
         let url = "/app/controllers/SearchController.php" +current_url+"&offset="+((page-1)*limit).toString()+"&limit="+limit.toString();
+        console.log("page:"+page+" url:"+url);
         xhr.open("GET", url, true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.send();
     });
+    console.log("page item:"+pageItem.innerHTML);
+    // pagination.appendChild(pageItem);
 }
 
 
@@ -146,7 +169,7 @@ searchInput.addEventListener("keyup", debounce(function(event) {
     xhr.onreadystatechange = function() { 
         if (xhr.readyState == 4 && xhr.status == 200) {
             current_page = 1;
-            location.search = current_url;
+            // location.search = current_url;
             updatePage(xhr);
         }
     }

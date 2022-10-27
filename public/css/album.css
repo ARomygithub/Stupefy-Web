@@ -2,17 +2,17 @@ body {
     background-color: black;
 }
 
-#container {
+.content {
     margin: 20px;
     padding: 20px;
     border-radius: 20px;
     background-color: rgba(255,255,255,0.1);
     color: white;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Inter;
     
 }
 
-#contents {
+.content-album {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -22,6 +22,7 @@ body {
 
 .image-container {
     aspect-ratio: 1;
+    width: 200px;
 }
 
 .album-title {

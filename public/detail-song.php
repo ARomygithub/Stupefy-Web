@@ -5,7 +5,7 @@
     require_once __DIR__ . '/../app/controllers/DetailedSongController.php';
     
     $nav = file_get_contents('./html/template/authorized-navbar.html');
-    $sidebar = file_get_contents('./html/template/admin-sidebar.html');
+    $sidebar = file_get_contents('./html/template/user-sidebar.html');
     
     $body = file_get_contents('./html/detail-song.html');
     
