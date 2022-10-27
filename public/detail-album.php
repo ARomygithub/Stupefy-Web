@@ -27,22 +27,25 @@
         
         echo $html;
     }
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Binotify</title>
-    <link rel="stylesheet" href="css/detail-album.css" />
-</head>
-<body>
-    <div id="container">
-        <?php echo_detail_album("4 phenomena", "Photon Maiden", 3098) ?>
-        <?php echo_song("4 Challanges") ?>
-        <?php echo_song("4 Challanges") ?>
-    </div>
-</body>
-</html>
+    session_start();
+
+    require_once __DIR__ . '/../app/controllers/AuthController.php';
+
+    $nav = file_get_contents('./html/template/authorized-navbar.html');
+    $sidebar = file_get_contents('./html/template/admin-sidebar.html');
+
+    $body = file_get_contents('./html/detail-album.html');
+
+    if(!isset($_SESSION['user_id']) && $user_role === 'admin'){
+        $sidebar = file_get_contents('./html/template/admin-sidebar.html');
+        $body = str_replace('{{ nav }}', $nav, $body);
+        $body = str_replace('{{ sidebar }}', $sidebar, $body);
+
+        echo $body;
+    } else{
+        http_response_code(403);
+        echo file_get_contents('./html/403.html');
+        // die('Forbidden');
+    } 
+?>
