@@ -21,6 +21,37 @@ function generateRandomString(){
     return $res;
 }
 
+function generateRandomEmail(){
+    $res = '';
+    $len = random_int(1, 16);
+    for($j = 0; $j<$len; $j++){
+        if($j === 0){
+            $res .= chr(random_int(65, 90));
+        } else {
+            if($j%2===0){
+                $res .= chr(random_int(97, 122));
+            }
+            else{
+                $res .= 'aiueo'[random_int(0, 4)];
+            }
+        }
+    }
+    $res .= '@gmail.com';
+
+    return $res;
+}
+
+function generateUniqueEmail(){
+    $res = [];
+    while(count($res) < 100){
+        $email = generateRandomEmail();
+        if(!in_array($email, $res)){
+            $res[] = $email;
+        }
+    }
+    return $res;
+}
+
 function seed(){
     $db = new Database();
 
@@ -39,6 +70,18 @@ function seed(){
     $db->bind(':name', 'admin');
     $db->bind(':isAdmin', 1);
     $db->execute();
+
+    $res = generateUniqueEmail();
+
+    for($i=0; $i<100; $i++){
+        $db->prepare('INSERT INTO user(email, password, username, name, isAdmin) VALUES(:email, :password, :username, :name, :isAdmin)');
+        $db->bind(':email', $res[$i]);
+        $db->bind(':password', password_hash(generateRandomString(), PASSWORD_DEFAULT));
+        $db->bind(':username', generateRandomString());
+        $db->bind(':name', generateRandomString());
+        $db->bind(':isAdmin', 0);
+        $db->execute();
+    }
 
 
     /*

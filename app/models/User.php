@@ -22,6 +22,13 @@ class User{
         return $this->db->getOne();
     }
 
+    public function getBacthData($offset, $limit){
+        $this->db->prepare("SELECT * FROM $this->table LIMIT :offset, :limit");
+        $this->db->bind(':offset', $offset);
+        $this->db->bind(':limit', $limit);
+        return $this->db->getAll();
+    }
+
     public function get($username, $limit, $isAdmin = false){
         $this->db->prepare("SELECT * FROM $this->table WHERE username = :username AND isAdmin = :isAdmin LIMIT :limit");
         $this->db->bind(':username', $username);

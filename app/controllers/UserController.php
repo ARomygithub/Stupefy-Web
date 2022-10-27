@@ -1,6 +1,24 @@
 <?php
 
     require_once __DIR__ . '/../models/User.php';
+
+    function createHeader(){
+        $html = <<<"EOT"
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Last Updated</th>
+                </tr>
+            </thead>
+        EOT;
+
+        return $html;
+    }
+
     function createEntry($user, $i){
         $user['role'] = 'User';
 
@@ -19,14 +37,34 @@
     }
 
 
-    $users = new User();
-    $users = $users->getAll();
-    $cards = '';
-    $i = 1;
-    foreach ($users as $user) {
-        $cards .= createEntry($user, $i);
-        $i++;
-    }
+    if(isset($_GET["offset"])) {
+        $offset = 0;
+        $limit = 10;
 
-    echo json_encode([$cards]);
+        if(isset($_GET['offset'])) {
+            $offset = (int)$_GET['offset'];
+        }
+        if(isset($_GET['limit'])) {
+            $limit = (int)$_GET['limit'];
+        }
+
+        $users = new User();
+        $users = $users->getBacthData($offset, $limit*4);
+
+        if(count($users) > 0){
+            $html = createHeader();
+            $count = count($users);
+            $i = 1;
+            foreach($users as $user){
+                $html .= createEntry($user, $i);
+                if($i == $limit){
+                    break;
+                }
+                $i++;
+            }
+            echo json_encode([$html, count($users)]);
+        }else{
+            echo json_encode(['', 0]);
+        }
+    }
 ?>
