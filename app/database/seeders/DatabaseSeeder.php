@@ -70,7 +70,7 @@ function seed(){
    }
 
 
-    $db->prepare('INSERT INTO song(judul, penyanyi, tanggal_terbit, genre, duration, audio_path, album_id) VALUES(:title, :artist, :tanggal_terbit, :genre, :duration, :audio_path, :album_id)');
+    $db->prepare('INSERT INTO song(judul, penyanyi, tanggal_terbit, genre, duration, audio_path, album_id, image_path) VALUES(:title, :artist, :tanggal_terbit, :genre, :duration, :audio_path, :album_id, :image_path)');
     for($i = 0; $i<100; $i++){
         $db->bind(':title', generateRandomString());
         $db->bind(':artist', generateRandomString());
@@ -78,6 +78,7 @@ function seed(){
         $db->bind(':genre', generateRandomString());
         $db->bind(':duration', random_int(1, 1000));
         $db->bind(':audio_path', '/storage/Believer.mp3');
+        $db->bind(':image_path', '/storage/thumbnail/default-thumbnail.png');
         $db->bind(':album_id', random_int(1, 100));
         $db->execute();
     }
