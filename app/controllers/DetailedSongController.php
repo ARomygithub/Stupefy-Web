@@ -20,7 +20,8 @@
             'song-album' => $album['Judul'], 
             'thumbnail' => $song['Image_path'], 
             'song-file' => $song['Audio_path'], 
-            'song-duration' => $song['Duration']
+            'song-duration' => $song['Duration'],
+            'album-id' => $song['album_id'],
         ];
     }
 

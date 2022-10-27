@@ -50,3 +50,8 @@ generateSong = function(img_src, title){
 function getDetailedSong($id){
     window.location.href = "/public/detail-song.php?id="+$id;
 }
+
+function editAlbum(){
+    let $id = get_query()['id'];
+    window.location.href = "/public/edit-album.php?id="+$id;
+}

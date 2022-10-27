@@ -37,13 +37,13 @@
                 <div class="input-group-1">
                     <div class="input-container">
                         <label for="album-title">Title</label>
-                        <input type="text" name="album-title" id="album-title" placeholder="Album Title" required>
+                        <input type="text" name="album-title" id="album-title" placeholder="Album Title" value="{{ album-title }}" required>
                         <div class="error-message" id="album-title-error">Salah</div>
                     </div>
 
                     <div class="input-container">
                         <label for="album-genre">Genre (Optional)</label>
-                        <input type="text" name="album-genre" id="album-genre" placeholder="Album Genre">
+                        <input type="text" name="album-genre" id="album-genre" placeholder="Album Genre" value="{{ album-genre }}">
                         <div class="error-message" id="album-genre-error">Salah</div>
                     </div>
                 </div>
@@ -51,13 +51,13 @@
                 <div class="input-group-2">
                     <div class="input-container">
                         <label for="release-date">Release Date</label>
-                        <input type="date" name="release-date" id="release-date" placeholder="01/01/1992" required>
+                        <input type="date" name="release-date" id="release-date" placeholder="01/01/1992" value="{{ album-date }}" required>
                         <div class="error-message" id="release-date-error">Salah</div>
                     </div>
 
                     <div class="input-container">
                         <label for="album-artist">Artist</label>
-                        <input type="text" name="album-artist" id="album-artist" placeholder="Album Artist" disabled>
+                        <input type="text" name="album-artist" id="album-artist" placeholder="Album Artist" value="{{ album-artist }}" disabled>
                         <div class="error-message" id="album-artist-error">Salah</div>
                     </div>
                 </div>

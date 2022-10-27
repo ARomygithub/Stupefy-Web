@@ -31,13 +31,17 @@
 
         $body = str_replace('{{ song-title }}', $song_information['song-title'], $body);
         $body = str_replace('{{ song-artist }}', $song_information['song-artist'], $body);
-        $body = str_replace('{{ song-album }}', $song_information['song-album'], $body);
+        if(isset($song_information['song-album'])) $body = str_replace('{{ song-album }}', ': ' . $song_information['song-album'], $body);
+        else $body = str_replace('{{ song-album }}', '', $body);
         $body = str_replace('{{ song-genre }}', $song_information['song-genre'], $body);
         $body = str_replace('{{ release-date }}', $song_information['release-date'], $body);
         $body = str_replace('{{ song-duration }}', $song_information['song-duration'], $body);
         $body = str_replace('{{ song-file }}', $song_information['song-file'], $body);
         $body = str_replace('{{ thumbnail-image }}', $song_information['thumbnail'], $body);
         $body = str_replace('{{ song-album }}', $song_information['song-album'], $body);
+        if(isset($song_information['album-id'])) $body = str_replace('{{ album-id }}', $song_information['album-id'], $body);
+        else $body = str_replace('{{ album-id }}', -1, $body);
+
     }
 
     $body = str_replace('{{ nav }}', $nav, $body);
