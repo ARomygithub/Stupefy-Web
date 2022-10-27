@@ -9,8 +9,13 @@ $sidebar = file_get_contents('./html/template/admin-sidebar.html');
 
 $body = file_get_contents('./html/add-album.html');
 
-if(!isset($_SESSION['user_id']) && $user_role === 'admin'){
+$user = getUserInformation();
+
+if(isset($user) && $user['isAdmin'] === 1){
     $sidebar = file_get_contents('./html/template/admin-sidebar.html');
+    $nav = str_replace('{{ user }}', $user['username'], $nav);
+    $nav = str_replace('{{ role }}', 'Admin' , $nav);
+
     $body = str_replace('{{ nav }}', $nav, $body);
     $body = str_replace('{{ sidebar }}', $sidebar, $body);
 
@@ -18,7 +23,6 @@ if(!isset($_SESSION['user_id']) && $user_role === 'admin'){
 } else{
     http_response_code(403);
     echo file_get_contents('./html/403.html');
-    // die('Forbidden');
 } 
 
 ?>

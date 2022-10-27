@@ -36,14 +36,24 @@ function isValidAuthCookie($cookies) {
     return $id;
 }
 
+function getUserInformation(){
+    $user = new User();
+    if(isValidAuthCookie($_COOKIE)){
+        $id = isValidAuthCookie($_COOKIE);
+        $user = $user->getById($id);
+    } else{
+        $user = null;
+    }
+
+    return $user;
+}
+
 function deleteAuthCookie() {
     $cookie_name = "COOKIE_AUTH";
     $cookie_value = "";
     $cookie_value = base64_encode($cookie_value);
     setcookie($cookie_name, $cookie_value, time() - COOKIE_AUTH_EXPIRE, "/");
 }
-
-$user_role = "admin";
 
 if(isset($_POST['login'])) {
     $username = $_POST['username'];

@@ -17,7 +17,7 @@ class User{
     }
 
     public function getByID($id){
-        $this->db->prepare("SELECT * FROM $this->table WHERE id = :id");
+        $this->db->prepare("SELECT * FROM $this->table WHERE user_id = :id");
         $this->db->bind(':id', $id);
         return $this->db->getOne();
     }
