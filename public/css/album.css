@@ -8,19 +8,20 @@ body {
     border-radius: 20px;
     background-color: rgba(255,255,255,0.1);
     color: white;
-    font-family: Inter;
-    
+    font-family: 'Inter';
 }
 
 .content-album {
     display: flex;
     justify-content: space-around;
+    row-gap: 20px;
+    column-gap: 20px;
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
-.image-container {
+.image-container img {
     aspect-ratio: 1;
     width: 200px;
 }
