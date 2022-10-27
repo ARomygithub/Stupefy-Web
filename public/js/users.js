@@ -8,9 +8,10 @@ window.onload = function(){
             console.log(xhr.responseText);
             let result = JSON.parse(xhr.responseText);
         
-            contents.innerHTML = "<tr> There are currently no user available </tr>";
             if (result[0] !== "") {
-                contents.innerHTML = result[0];
+                contents.innerHTML += result[0];
+            } else{
+                contents.innerHTML = "<tr> There are currently no user available </tr>";
             }
         }
     }

@@ -7,3 +7,22 @@
     text-align: center;
 }
 
+.contents thead{
+    background-color: #404040;
+    color: white;
+    width: 100%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 29px;
+}
+
+.contents .content-entry:hover{
+    cursor: context-menu !important;
+    background-color: #161616 !important;
+}
+
+.contents .content-entry{
+    text-align: center !important;
+}
