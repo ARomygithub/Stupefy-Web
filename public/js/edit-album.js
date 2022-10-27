@@ -1,10 +1,28 @@
 window.onload = function() {
     toogleSideBar();
+
+    let albumTitle = document.getElementById("album-title");
+    let albumArtist = document.getElementById("album-artist");
+    let releaseDate = document.getElementById("release-date");
+    let albumGenre = document.getElementById("album-genre");
+    let thumbnailImage = document.getElementById("album-thumbnail");
+    let songAlbum = document.getElementById("song-album");
+    let songTable = document.getElementById("song-table");
+
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const albumID = urlParams.get('id');
+
+
     let xhr = new XMLHttpRequest();
     let contents = document.getElementById("song-album");
 
+    // [$cardOptions, $cardCurrentSong, $albumArtist, $albumName, $albumReleaseDate, $albumGenre, $albumThumbnail, $albumDuration]
+
     xhr.onreadystatechange = function() { 
         if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
             let result = JSON.parse(xhr.responseText);
             
             contents.innerHTML = "<option value='' disabled>Select Songs</option>";
@@ -13,13 +31,31 @@ window.onload = function() {
                 contents.innerHTML += result[0];
             }
 
+            if(result[1] !=""){
+                songTable.innerHTML += result[1];
+            }
+
+            albumArtist.value = result[2];
+            albumArtist.disabled = true;
+            if(result[2] !=""){
+                songAlbum.value = "-1";
+            } else{
+                songAlbum.value = "-1";
+            }
+
+            albumTitle.value = result[3];
+            releaseDate.value = result[4];
+            albumGenre.value = result[5];
+            thumbnailImage.src = result[6];
+
+
             for(let i=0; i<document.getElementsByClassName('error-message').length; i++){
                 document.getElementsByClassName('error-message')[i].style.display = "none";
             }
             
         }
     }
-    url = "/app/controllers/AlbumController.php";
+    url = "/app/controllers/AlbumController.php/?id="+albumID;
 
     xhr.open("GET", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
