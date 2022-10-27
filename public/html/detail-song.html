@@ -22,7 +22,7 @@
                     <div id="duration">{{ song-duration }}</div>
                 </div>
             </div>
-            <div id="check-album-button" onclick="getDetailedAlbum({{ album-id }})">Check Album {{ song-album }}</div>
+            <div class="{{ button-class }}" onclick="getDetailedAlbum({{ album-id }})">Check Album {{ song-album }}</div>
             <audio src="{{ song-file }}" controls="true"></audio>
         </div>
     </div>
