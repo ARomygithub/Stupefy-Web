@@ -1,9 +1,11 @@
 #detail-song {
     display: flex;
-    align-items: center;
     color: white;
 }
 
+#song-info {
+    align-self: center;
+}
 #thumbnail {
     margin: 20px;
     aspect-ratio: 1;
@@ -74,5 +76,27 @@ audio{
 
 .check-album-button:hover{
     background-color: #1ED760;
+    cursor: pointer;
+}
+
+.empty-container {
+    flex: auto;
+}
+.song-image{
+    aspect-ratio: 1;
+    height: 50px;
+    margin: 20px;
+}
+
+.control-container img{
+    aspect-ratio: 1;
+    width: 30px;
+}
+
+.edit:hover {
+    cursor: pointer;
+}
+
+.delete:hover {
     cursor: pointer;
 }

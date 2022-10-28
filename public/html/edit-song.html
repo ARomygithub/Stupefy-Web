@@ -1,0 +1,106 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/add-song.css">
+    <title>Stupefy | Edit Song</title>
+</head>
+
+<body>
+    {{ sidebar }}
+    <div class="side-container">
+        {{ nav }}
+        <div class="content">
+            <div class="container-title">
+                Add New Song
+            </div>
+            <form enctype="multipart/form-data" class="contents" id="add-song-form">
+                <div class="input-group-0">
+                    <img class="thumbnail" src="/storage/thumbnail/default-thumbnail.png" id="song-thumbnail" alt="thumbnail">
+
+                    <div class="input-container">
+                        <label>Upload Thumbnail (Optional)</label>
+                        <div class="file-uploader">
+                            <input type="text" name="thumbnail-path" id="thumbnail-path"
+                                placeholder="Select thumbnail image file" disabled>
+                            <div class="upload-button" onclick="getThumbnail()">Select File</div>
+                        </div>
+                        <input type="file" name="thumbnail-image" id="thumbnail-image" name="thumbnail-image"
+                            accept="image/*" onchange="previewThumbnail(event)" hidden>
+                        <div class="error-message" id="thumbnail-error">Salah</div>
+                    </div>
+                </div>
+
+                <div class="input-group-1">
+                    <div class="input-container">
+                        <label for="song-title">Title</label>
+                        <input type="text" name="song-title" id="song-title" placeholder="Song Title" value="{{ song-title }}" required>
+                        <div class="error-message" id="song-title-error">Salah</div>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="song-genre">Genre (Optional)</label>
+                        <input type="text" name="song-genre" id="song-genre" placeholder="Song Genre" value="{{ song-genre }}">
+                        <div class="error-message" id="song-genre-error">Salah</div>
+                    </div>
+                </div>
+
+                <div class="input-group-2">
+                    <div class="input-group-2-1">
+                        <div class="input-container">
+                            <label for="release-date">Release Date</label>
+                            <input type="date" name="release-date" id="release-date" placeholder="01/01/1992" value="{{ song-date }}" required>
+                            <div class="error-message" id="release-date-error">Salah</div>
+                        </div>
+
+                        <div class="input-container">
+                            <label for="song-artist">Artist (Optional)</label>
+                            <input type="text" name="song-artist" id="song-artist" placeholder="Song Artist" value="{{ song-artist }}">
+                            <div class="error-message" id="song-artist-error">Salah</div>
+                        </div>
+                    </div>
+                    <div class="input-group-2-2">
+                        <div class="input-container">
+                            <label for="song-album">Album (Optional)</label>
+                            <div class="field-with-icon">
+                                <img src="img/icons-music-album-grey.png" alt="album">
+                                <select name="song-album" id="song-album" onchange="getAlbumArtist(event)" value='-1'>
+                                </select>
+                            </div>
+                            <div class="error-message" id="song-album-error">Salah</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-container song-uploader">
+                    <label>Upload Song File</label>
+                    <div class="field-with-icon">
+                        <img src="img/icons-music-file-grey.png" alt="">
+                        <div class="file-uploader">
+                            <input type="text" name="song-path" id="song-path" placeholder="Select song file" disabled required>
+                            <div class="upload-button" onclick="getSong()">Select File</div>
+                        </div>
+                        <input type="file" name="song-file" id="song-file" name="song-file"
+                            onchange="previewSong(event)" accept="audio/*" required hidden>
+                        </div>
+                    </div>
+                    <div class="error-message" id="song-file-error">Salah</div>
+
+                <audio id="add-audio" controls >
+                    <source type="audio/mp3" id="song-preview" src="">
+                    <source type="audio/ogg" id="song-preview" src="">
+                    Your browser does not support the audio element.
+                </audio>
+                <input type="submit" value="Submit" name="submit-button" id="submit" onclick="submitform(event)">
+
+            </form>
+        </div>
+
+    </div>
+
+</body>
+
+<script src="./js/edit-song.js"></script>
+<script src="./js/nav.js"></script>

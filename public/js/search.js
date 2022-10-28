@@ -29,10 +29,16 @@ window.onload = function(){
         url = url+location.search+"&offset=0&limit="+limit.toString();
         current_url = location.search;
         let judul = new URLSearchParams(location.search).get("search");
-        document.getElementsByClassName("container-title")[0].innerHTML = "Search for \""+judul+"\"";
+        document.getElementById("search-input").value = judul;
+        if(judul==="") {
+            document.getElementsByClassName("container-title")[0].innerHTML = "All Songs";
+        } else {
+            document.getElementsByClassName("container-title")[0].innerHTML = "Search for \""+judul+"\"";
+        }
     } else {
         url = url+"?search=";
         current_url="?search=";
+        document.getElementById("search-input").value = "";
         document.getElementsByClassName("container-title")[0].innerHTML = "All songs";
     }
 
@@ -40,7 +46,7 @@ window.onload = function(){
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     xhr.send();
 };
-
+window.onpopstate = window.onload;
 // function GetParameter() {
 //     var result = null,
 //         tmp = [];
@@ -177,7 +183,17 @@ searchInput.addEventListener("keyup", debounce(function(event) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             current_page = 1;
             // location.search = current_url;
+            if(keyword==="") {
+                document.getElementsByClassName("container-title")[0].innerHTML = "All Songs";
+            } else {
+                document.getElementsByClassName("container-title")[0].innerHTML = "Search for \""+keyword+"\"";            
+            }            
             updatePage(xhr);
+            state = {
+                page: current_page,
+                keyword: keyword
+            }; //idk
+            history.pushState(state,"","search.php"+current_url);
         }
     }
     xhr.open("GET", url, true);
@@ -204,7 +220,6 @@ sort_select.addEventListener("change", function() {
     xhr.onreadystatechange = function() { 
         if (xhr.readyState == 4 && xhr.status == 200) {
             current_page = 1;
-            // let judul = 
             updatePage(xhr);
         }
     }
