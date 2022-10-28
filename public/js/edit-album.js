@@ -55,7 +55,7 @@ window.onload = function() {
             
         }
     }
-    url = "/app/controllers/AlbumController.php/?id="+albumID;
+    url = "/app/controllers/EditAlbumController.php/?id="+albumID;
 
     xhr.open("GET", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -120,7 +120,13 @@ function changeSongAlbum(event){
     let songTable = document.getElementById("song-table");
     formData = new FormData();
     formData.append("songID", event.target.value);
-    // formData.append("album-artist", albumArtist.value);
+    formData.append("album-artist", albumArtist.value);
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const albumID = urlParams.get('id');
+    formData.append("album-id", albumID);
+
 
     let songList = [];
 
@@ -168,9 +174,9 @@ function changeSongAlbum(event){
             }
         }
 
-        url = "/app/controllers/AlbumController.php";
+        url = "/app/controllers/EditAlbumController.php";
 
-        xhr.open("PUT", url, true);
+        xhr.open("POST", url, true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.send(formData);
     }
@@ -185,6 +191,12 @@ function deleteCurrentSong($id){
     let songTable = document.getElementById("song-table");
     formData = new FormData();
     formData.append("song-id", $id);
+    formData.append("album-artist", albumArtist.value);
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const albumID = urlParams.get('id');
+    formData.append("album-id", albumID);
 
     let songList = [];
 
@@ -226,9 +238,9 @@ function deleteCurrentSong($id){
             }
         }
 
-        url = "/app/controllers/AlbumController.php";
+        url = "/app/controllers/EditAlbumController.php";
 
-        xhr.open("PUT", url, true);
+        xhr.open("POST", url, true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.send(formData);
     }
@@ -249,6 +261,12 @@ function submitform(event){
         songList.push(parseInt(currentSongs[i].value));
     }
 
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const albumID = urlParams.get('id');
+    formData.append("album-id", albumID);
+    formData.append("album-artist", document.getElementById("album-artist").value);
+
     formData.append("Song[]", songList);
     formData.append("Update", true);
 
@@ -258,7 +276,6 @@ function submitform(event){
     }
 
     if(validateForm(formData)){
-        console.log("Hello World!")
         let xhr = new XMLHttpRequest();
 
 
@@ -279,13 +296,12 @@ function submitform(event){
         xhr.onerror = function() {
             console.log("Error");
         }
-        url = "/app/controllers/AlbumController.php";
+        url = "/app/controllers/EditAlbumController.php";
 
-        xhr.open("PUT", url, true);
+        xhr.open("POST", url, true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.send(formData);
     }
-    goToAlbum();
 }
 
 function validateForm(form){
@@ -341,9 +357,4 @@ function get_query(){
         result[qs[i][0]] = qs[i][1];
     }
     return result;
-}
-
-function goToAlbum(){
-    let $id = get_query()['id'];
-    window.location.href = "/public/detail-album.php?id="+$id;
 }

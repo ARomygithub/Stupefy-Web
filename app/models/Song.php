@@ -118,7 +118,7 @@ class Song{
         return $this->db->execute();
     }
 
-    public function getAvailableSong($penyanyi, $array_of_disabled){
+    public function getAvailableSong($penyanyi, $array_of_disabled, $album_id=NULL){
 
         if(!isset($penyanyi)){
             if(count($array_of_disabled) == 0){
@@ -133,14 +133,32 @@ class Song{
         }
         else{
             if(count($array_of_disabled) == 0){
-                $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE penyanyi = :penyanyi AND album_id IS NULL");
-                $this->db->bind(':penyanyi', $penyanyi);
-                return $this->db->getAll();
+                if(isset($album_id)){
+                    $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE album_id = :album_id AND penyanyi = :penyanyi");
+                    $this->db->bind(':penyanyi', $penyanyi);
+                    $this->db->bind(':album_id', $album_id);
+                    return $this->db->getAll();
+                }
+                else{
+                    $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE album_id IS NULL AND penyanyi = :penyanyi");
+                    $this->db->bind(':penyanyi', $penyanyi);
+                    return $this->db->getAll();
+                }
             }
             else{
-                $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE penyanyi = :penyanyi AND album_id IS NULL AND song_id NOT IN ("
-                . implode(',',$array_of_disabled) . ")");
-                $this->db->bind(':penyanyi', $penyanyi);
+                if(isset($album_id)){
+                    $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE album_id = :album_id AND penyanyi = :penyanyi AND song_id NOT IN ("
+                    . implode(',',$array_of_disabled) . ")");
+                    $this->db->bind(':penyanyi', $penyanyi);
+                    $this->db->bind(':album_id', $album_id);
+                    return $this->db->getAll();
+                }
+                else{
+                    $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE album_id IS NULL AND penyanyi = :penyanyi AND song_id NOT IN ("
+                    . implode(',',$array_of_disabled) . ")");
+                    $this->db->bind(':penyanyi', $penyanyi);
+                    return $this->db->getAll();
+                }
     
                 return $this->db->getAll();
             }
@@ -187,6 +205,20 @@ class Song{
         $this->db->prepare("DELETE FROM $this->table WHERE song_id = :id");
         $this->db->bind(':id', $id);
         return $this->db->execute();
+    }
+
+    public function updateAlbum($albumSongs, $albumID){
+        $this->db->prepare("UPDATE $this->table SET album_id = NULL WHERE album_id = :album_id");
+        $this->db->bind(':album_id', $albumID);
+        if(count($albumSongs) == 0){
+            return true;
+        }
+        else{
+            $this->db->prepare("UPDATE $this->table SET album_id = :album_id WHERE song_id IN ("
+            . implode(',',$albumSongs) . ")");
+            $this->db->bind(':album_id', $albumID);
+            return $this->db->execute();
+        }
     }
 }
 

@@ -96,6 +96,37 @@ class Album{
         $this->db->bind(':id', $id);
         return $this->db->execute();
     }
+
+    public function updateAlbum($albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumId, $thumbnail_path, $album_duration){
+        if(isset($thumbnail_path)){
+            $this->db->prepare("UPDATE $this->table SET Judul = :albumName, Penyanyi = :albumArtist, Tanggal_terbit = :albumReleaseDate, Genre = :albumGenre, Total_duration = :album_duration, Image_path = :thumbnail_path WHERE album_id = :id");
+            $this->db->bind(':albumName', $albumName);
+            $this->db->bind(':albumArtist', $albumArtist);
+            $this->db->bind(':albumReleaseDate', $albumReleaseDate);
+            $this->db->bind(':albumGenre', $albumGenre);
+            $this->db->bind(':album_duration', $album_duration);
+            $this->db->bind(':thumbnail_path', $thumbnail_path);
+            $this->db->bind(':id', $albumId);
+    
+            return $this->db->execute();
+        } else{
+            $this->db->prepare("UPDATE $this->table SET Judul = :albumName, Penyanyi = :albumArtist, Tanggal_terbit = :albumReleaseDate, Genre = :albumGenre, Total_duration = :album_duration WHERE album_id = :id");
+            $this->db->bind(':albumName', $albumName);
+            $this->db->bind(':albumArtist', $albumArtist);
+            $this->db->bind(':albumReleaseDate', $albumReleaseDate);
+            $this->db->bind(':albumGenre', $albumGenre);
+            $this->db->bind(':album_duration', $album_duration);
+            $this->db->bind(':id', $albumId);
+    
+            return $this->db->execute();
+        }
+    }
+
+    public function getPath($id){
+        $this->db->prepare("SELECT Image_path FROM $this->table WHERE album_id = :id");
+        $this->db->bind(':id', $id);
+        return $this->db->getOne();
+    }
 }
 
 ?>

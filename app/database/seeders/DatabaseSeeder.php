@@ -114,15 +114,22 @@ function seed(){
 
 
     $db->prepare('INSERT INTO song(judul, penyanyi, tanggal_terbit, genre, duration, audio_path, album_id, image_path) VALUES(:title, :artist, :tanggal_terbit, :genre, :duration, :audio_path, :album_id, :image_path)');
+    $db2 = new Database();
+    $db2->prepare('SELECT Penyanyi FROM album WHERE album_id = :id');
     for($i = 0; $i<100; $i++){
+
+        $album_id = random_int(1, 100);
+        $db2->bind(':id', $album_id);
+        $artist = $db2->getOne()['Penyanyi'];
+        
         $db->bind(':title', generateRandomString());
-        $db->bind(':artist', generateRandomString());
+        $db->bind(':artist', $artist);
         $db->bind(':tanggal_terbit', '2019-12-12');
         $db->bind(':genre', generateRandomString());
         $db->bind(':duration', random_int(1, 1000));
         $db->bind(':audio_path', '/storage/Believer.mp3');
         $db->bind(':image_path', '/storage/thumbnail/default-thumbnail.png');
-        $db->bind(':album_id', random_int(1, 100));
+        $db->bind(':album_id', $album_id);
         $db->execute();
     }
 }
