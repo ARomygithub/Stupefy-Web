@@ -54,6 +54,7 @@ function deleteAuthCookie() {
     $cookie_value = base64_encode($cookie_value);
     setcookie($cookie_name, $cookie_value, time() - COOKIE_AUTH_EXPIRE, "/");
 }
+session_start();
 
 if(isset($_POST['login'])) {
     $username = $_POST['username'];
@@ -81,6 +82,24 @@ if(isset($_POST['logout'])) {
     deleteAuthCookie();
     session_destroy();
     echo "logout success";
+}
+
+if(isset($_POST['play_song'])) {
+    if(isValidAuthCookie($_COOKIE)){
+        echo json_encode(["play song success"]);
+    } else{
+        if(!isset($_SESSION['last_played']) || $_POST['song_id']!==$_SESSION['last_played']) {
+            if($_SESSION['total_played'] < 3) {
+                $_SESSION['total_played']++;
+                $_SESSION['last_played'] = $_POST['song_id'];
+                echo json_encode(["play song success", $_SESSION['total_played']]);
+            } else {
+                echo json_encode(["play song failed", $_SESSION['total_played']]);
+            }
+        } else {
+            echo json_encode(["play song success", $_SESSION['total_played']]);
+        }
+    }
 }
 
 ?>
