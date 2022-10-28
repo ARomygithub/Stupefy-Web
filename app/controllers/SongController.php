@@ -48,7 +48,7 @@
                 $error = true;
             }
         } else{
-            $thumbnail_path = $thumbnail_directory . 'default-thumbnail.png';    
+            $thumbnail_path = '/storage/thumbnail/default-thumbnail.png';    
         }
 
         if(!$error&& !move_uploaded_file(str_replace(' ', '_', $_FILES['song-file']['tmp_name']), $song_file_path)){
