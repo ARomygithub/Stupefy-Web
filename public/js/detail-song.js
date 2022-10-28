@@ -53,3 +53,30 @@ function deleteSong(){
     }
        
 }
+
+let songElem = document.getElementsByTagName("audio")[0];
+songElem.addEventListener("play", function() {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4 && xhr.status == 200){
+            console.log(xhr.responseText);
+            response = JSON.parse(xhr.responseText);
+            if(response[0] === "play song success"){
+                // bolehin play
+                // songElem.load();
+                // songElem.play();
+            } else {
+                // stopin play
+                songElem.pause();
+                songElem.innerHTML = "";
+                alert("Total played have exceeded. Please login");
+            }
+        }
+    };
+    data = new FormData();
+    data.set("play_song",true);
+    data.set("song_id",get_query()['id']);
+    xhr.open("POST", "/app/controllers/AuthController.php", true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.send(data);
+});
