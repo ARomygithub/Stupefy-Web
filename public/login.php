@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/login-reg.css" />
     <link rel="stylesheet" href="css/form.css" />
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <link rel="icon" type="image/x-icon" href="/public/img/favicon.ico">
 </head>
 <body>
     <div id="container">
