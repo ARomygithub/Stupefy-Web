@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if(!isset($_SESSION['total_played'])) {
+        $_SESSION['total_played'] = 0;
+    }    
     require_once __DIR__ . '/../app/controllers/AuthController.php';
 
     if(isValidAuthCookie($_COOKIE)) {
