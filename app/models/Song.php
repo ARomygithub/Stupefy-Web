@@ -210,6 +210,7 @@ class Song{
     public function updateAlbum($albumSongs, $albumID){
         $this->db->prepare("UPDATE $this->table SET album_id = NULL WHERE album_id = :album_id");
         $this->db->bind(':album_id', $albumID);
+        $this->db->execute();
         if(count($albumSongs) == 0){
             return true;
         }
