@@ -28,15 +28,28 @@
         return $html;
     }
 
-    if(isset($_GET['page'])) $page = $_GET['page'];
-    else $page = 1; 
-    $pagesize = 10;
-    $albums = new Album();
-    $albums = $albums->getTemplated(($page-1) * $pagesize, $pagesize);
-    $cards = '';
-    foreach ($albums as $album) {
-        $cards .= createEntry($album);
-    }
+    if(isset($_GET["offset"])) {
+        $offset = 0;
+        $limit = 10;
 
-    echo json_encode([$cards]);
+        if(isset($_GET['offset'])) {
+            $offset = (int)$_GET['offset'];
+        }
+        if(isset($_GET['limit'])) {
+            $limit = (int)$_GET['limit'];
+        }
+        $albums = new Album();
+        $albums = $albums->getTemplated($offset, $limit);
+        $cards = "";
+        $i = 1;
+        foreach($albums as $album){
+            $cards .= createEntry($album, $i);
+            if($i == $limit){
+                break;
+            }
+            $i++;
+        }
+
+        echo json_encode([$cards, count($albums)]);
+    }
 ?>

@@ -13,7 +13,7 @@ body {
 
 .content-album {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     row-gap: 20px;
     column-gap: 20px;
     align-items: center;
