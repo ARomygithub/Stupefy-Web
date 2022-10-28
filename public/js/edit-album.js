@@ -250,7 +250,7 @@ function submitform(event){
     }
 
     formData.append("Song[]", songList);
-    formData.append("Submit", true);
+    formData.append("Update", true);
 
 
     for(var pair of formData.entries()) {
@@ -285,10 +285,7 @@ function submitform(event){
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.send(formData);
     }
-
-
-
-    
+    goToAlbum();
 }
 
 function validateForm(form){
@@ -336,3 +333,17 @@ function validateForm(form){
     return !error;
 }
 
+function get_query(){
+    var url = location.href;
+    var qs = url.substring(url.indexOf('?') + 1).split('&');
+    for(var i = 0, result = {}; i < qs.length; i++){
+        qs[i] = qs[i].split('=');
+        result[qs[i][0]] = qs[i][1];
+    }
+    return result;
+}
+
+function goToAlbum(){
+    let $id = get_query()['id'];
+    window.location.href = "/public/detail-album.php?id="+$id;
+}

@@ -158,37 +158,56 @@
         }
 
         echo json_encode([$cardOptions, $cardCurrentSong, $albumArtist, $albumName, $albumReleaseDate, $albumGenre, $albumThumbnail]);
-    } else if(isset($_POST['Update'])){
-        // $album = new Album();
-        // $albumID = $_POST['album-id'];
-        // $albumName = $_POST['album-title'];
-        // $albumArtist = $_POST['album-artist'];
-        // $albumReleaseDate = date('Y-m-d', strtotime($_POST['release-date']));
-        // $albumGenre = $_POST['album-genre'];
-        // $albumSongs = $_POST['Song'];
-        // $albumDuration = $_POST['album-duration'];
+    } else if($_SERVER['REQUEST_METHOD'] === 'PUT'){
+        $thumbnail_directory = "./../../storage/thumbnail//";
+        if(isset($_FILES['thumbnail-image']['name'])){
+            $thumbnail_name = str_replace(" ", "_", $_FILES['thumbnail-image']['name']);
+            $thumbnail_path = $thumbnail_directory . $thumbnail_name; 
+            $i=1;
+            while(file_exists($thumbnail_path)){
+                $song_file_path = $song_file_directory .$song_file_name."($i)";
+                $i++;
+            }
+        }
 
-        // if($_FILES['thumbnail-image']['name'] != ''){
-        //     $thumbnail_directory = "./../../storage/thumbnail//";
-        //     $thumbnail_name = str_replace(" ", "_", $_FILES['thumbnail-image']['name']);
+        if(!move_uploaded_file(str_replace(' ', '_', $_FILES['thumbnail-image']['tmp_name']), $thumbnail_path)){
+            echo json_encode(['status' => 'thumbnail-error', 'message' => 'Failed to upload thumbnail file']);
+        } else{
+            $album = new Album();
+            
+            
+            $albumName = $_PUT["album-title"];
+            $albumArtist = $_PUT["album-artist"];
+            $albumReleaseDate = date('Y-m-d', strtotime($_PUT["release-date"]));
+            $albumGenre = $_PUT["album-genre"] or NULL;
+            $albumSongs = $_PUT["Song"];
+            if($albumSongs[0] == ""){
+                $albumSongs = [];
+            }
+            $album_duration = $songs->totalCount($albumSongs)['total_duration'];
 
-        //     $thumbnail_path = $thumbnail_directory . $thumbnail_name;; 
+            $album->addAlbum($albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumSongs, $thumbnail_path, $album_duration);
+            $songs->updateAlbumID($albumSongs, $album->getAlbumID($albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumSongs, $thumbnail_path, $album_duration)['album_id']);
 
-        //     $i=1;
-        //     while(file_exists($thumbnail_path)){
-        //         $song_file_path = $song_file_directory .$song_file_name."($i)";
-        //         $i++;
-        //     }
+            echo json_encode(['status' => 'success', 'message' => 'Album added successfully']);
 
-        //     if(!move_uploaded_file(str_replace(' ', '_', $_FILES['thumbnail-image']['tmp_name']), $thumbnail_path)){
-        //         echo json_encode(['status' => 'thumbnail-error', 'message' => 'Failed to upload thumbnail file']);
-        //     } else{
-        //         $album->updateAlbum($albumID, $albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumSongs, $thumbnail_path, $albumDuration);
-        //         $songs->updateAlbumID($albumSongs, $albumID);
-        //         echo json_encode(['status' => 'success', 'message' => 'Album updated successfully']);
-        //     }   
-        // }
-    } else{
+        }
+    } else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') { 
+        $albums = new Album();
+        $album = $salbum->getPath(intval($_GET['id']));
+
+        $thumbnail_path = $album['Image_path'];
+
+        if(isset($thumbnail_path)){
+            if(file_exists($thumbnail_path)){
+                unlink($thumbnail_path);
+            }
+        }
+        
+        $albums->deleteAlbumbyID(intval($_GET['id']));
+        
+        echo json_encode(['status' => 'success', 'message' => 'Song deleted successfully']);
+    }else{
         $songs = $songs->getAvailableSong(NULL, []);
         $cards = '';
         foreach ($songs as $song) {

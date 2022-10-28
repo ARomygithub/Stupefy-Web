@@ -79,6 +79,23 @@ class Album{
         $this->db->bind(':thumbnail_path', $thumbnail_path);
         return $this->db->getOne();
     }
+
+    public function setAlbumID($albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumSongs, $thumbnail_path, $album_duration){
+        $this->db->prepare("SELECT album_id FROM $this->table WHERE Judul = :albumName AND Penyanyi = :albumArtist AND Tanggal_terbit = :albumReleaseDate AND Genre = :albumGenre AND Total_duration = :album_duration AND Image_path = :thumbnail_path");
+        $this->db->bind(':albumName', $albumName);
+        $this->db->bind(':albumArtist', $albumArtist);
+        $this->db->bind(':albumReleaseDate', $albumReleaseDate);
+        $this->db->bind(':albumGenre', $albumGenre);
+        $this->db->bind(':album_duration', $album_duration);
+        $this->db->bind(':thumbnail_path', $thumbnail_path);
+        return $this->db->getOne();
+    }
+
+    public function deleteAlbumbyID($id){
+        $this->db->prepare("DELETE FROM $this->table WHERE album_id = :id");
+        $this->db->bind(':id', $id);
+        return $this->db->execute();
+    }
 }
 
 ?>
