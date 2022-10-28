@@ -3,7 +3,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-    <link rel="stylesheet" href="css/song.css" />
+    <link rel="stylesheet" href="css/detail-song.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" type="image/x-icon" href="/public/img/favicon.ico">
     <title>Stupefy | Detail Song</title>
@@ -25,7 +25,7 @@
                 <div class="empty-container"></div>
                 <div class="control-container">
                     <img src="/public/img/icons-edit-grey.png" class="edit" onclick="editSong();"/>
-                    <img src="/public/img/icons-delete.png" class="delete"/>
+                    <img src="/public/img/icons-delete.png" class="delete" onclick="deleteSong()"/>
                 </div>
             </div>
             <div class="{{ button-class }}" onclick="getDetailedAlbum({{ album-id }})">Check Album {{ song-album }}</div>

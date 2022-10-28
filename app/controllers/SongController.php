@@ -48,7 +48,7 @@
                 $error = true;
             }
         } else{
-            $thumbnail_path = $thumbnail_directory . 'default-thumbnail.png';    
+            $thumbnail_path = '/storage/thumbnail/default-thumbnail.png';    
         }
 
         if(!$error&& !move_uploaded_file(str_replace(' ', '_', $_FILES['song-file']['tmp_name']), $song_file_path)){
@@ -81,6 +81,27 @@
             
             echo json_encode(['status' => 'success', 'message' => 'Song added successfully']);
         }
+    } else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') { 
+        $songs = new Song();
+        $song = $songs->getPath(intval($_GET['id']));
+
+        $thumbnail_path = $song['Image_path'];
+        $song_file_path = $song['Audio_path'];
+
+        if(isset($thumbnail_path)){
+            if(file_exists($thumbnail_path)){
+                unlink($thumbnail_path);
+            }
+        }
+        if(isset($song_file_path)){
+            if(file_exists($song_file_path)){
+                unlink($song_file_path);
+            }
+        }
+        
+        $songs->deleteSongbyID(intval($_GET['id']));
+        
+        echo json_encode(['status' => 'success', 'message' => 'Song deleted successfully']);
     } 
     else{
         $albums = new Album();

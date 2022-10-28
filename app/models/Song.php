@@ -176,6 +176,18 @@ class Song{
         $this->db->bind(':id', $id);
         return $this->db->getOne();
     }
+
+    public function getPath($id){
+        $this->db->prepare("SELECT Audio_path, Image_path FROM $this->table WHERE song_id = :id");
+        $this->db->bind(':id', $id);
+        return $this->db->getOne();
+    }
+
+    public function deleteSongbyID($id){
+        $this->db->prepare("DELETE FROM $this->table WHERE song_id = :id");
+        $this->db->bind(':id', $id);
+        return $this->db->execute();
+    }
 }
 
 ?>
