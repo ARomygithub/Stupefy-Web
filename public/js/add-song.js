@@ -24,10 +24,10 @@ window.onload = function() {
     xhr.open("GET", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     xhr.send();
-    toogleSideBar();
+    toggleSideBar();
 }
 
-function toogleSideBar(){
+function toggleSideBar(){
     let sidebarActive = document.getElementsByClassName("active")[0];
     sidebarActive.classList.remove("active");
     sidebarActive.children[0].src = "/public/img/icons-"+sidebarActive.id +"-grey.png";

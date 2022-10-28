@@ -3,7 +3,7 @@ let itemName = "page-item";
 let current_page = 1;
 
 window.onload = function(){
-    toogleSideBar();
+    toggleSideBar();
     let xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() { 
