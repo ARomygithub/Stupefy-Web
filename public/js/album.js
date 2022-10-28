@@ -1,4 +1,4 @@
-let limit=10;
+let limit=12;
 let itemName = "page-item";
 let current_page = 1;
 
