@@ -18,7 +18,11 @@ loginButton.addEventListener("click", debounce(function() {
             if (xhr.responseText === "login success") {
                 document.location.href = ".";
             } else {
-                alert("Wrong username or password");
+                document.getElementById("username-error").style.display = "None";
+
+
+                document.getElementById("password-error").innerHTML = "Wrong username or password";
+                document.getElementById("password-error").style.display = "block";
             }
         }
     }
@@ -29,7 +33,30 @@ loginButton.addEventListener("click", debounce(function() {
     data.set("login", "true");
     data.set("username", username);
     data.set("password", password);
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    xhr.send(data);
+    if (!validateForm(data)) {
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.send(data);
+    }
 }));
+
+function validateForm(formData){
+    let error = false;
+    let username = formData.get("username");
+    let password = formData.get("password");
+    if(username === ""){
+        document.getElementById("username-error").innerHTML = "Username is required";
+        document.getElementById("username-error").style.display = "block";
+        error = true;
+    } else{
+        document.getElementById("username-error").style.display = "none";
+    }
+    if(password === ""){
+        document.getElementById("password-error").innerHTML = "Password is required";
+        document.getElementById("password-error").style.display = "block";
+        error = true;
+    } else{
+        document.getElementById("password-error").style.display = "none";
+    }
+    return error;
+}

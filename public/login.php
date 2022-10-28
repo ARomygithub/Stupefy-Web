@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Stupefy</title>
     <link rel="stylesheet" href="css/login-reg.css" />
+    <link rel="stylesheet" href="css/form.css" />
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
 </head>
 <body>
@@ -27,10 +28,12 @@
                     <div class="input">
                         <label for="username">Username</label>
                         <input type="text" name="username" id="username" placeholder="Username" />
+                        <div class="error-message" id="username-error">Salah</div>
                     </div>
                     <div class="input">
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" placeholder="Password"/>
+                        <div class="error-message" id="password-error">Salah</div>
                     </div>
                 </form>
                 <div id="div-button">

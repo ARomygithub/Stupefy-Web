@@ -153,6 +153,10 @@ hr {
     margin: 20px;
 }
 
+.error-message{
+    margin-bottom: 1px !important;
+}
+
 /* .to-login {
     text-align: center;
 }

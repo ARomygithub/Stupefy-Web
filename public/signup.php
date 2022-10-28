@@ -11,6 +11,7 @@
             <div class="field">
                 <label for="$name">$name</label>
                 <input type="$type" id="field-$name" name="$name" placeholder="$placeholder" value="$value" />
+                <div class="error-message" id="$name-error">Salah</div>
             </div>
         EOT;
 
@@ -26,6 +27,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - Stupefy</title>
     <link rel="stylesheet" href="css/login-reg.css" />
+    <link rel="stylesheet" href="css/form.css" />
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
 </head>
 <body>
