@@ -96,6 +96,12 @@ class Album{
         $this->db->bind(':id', $id);
         return $this->db->execute();
     }
+
+    public function getPath($id){
+        $this->db->prepare("SELECT Image_path FROM $this->table WHERE album_id = :id");
+        $this->db->bind(':id', $id);
+        return $this->db->getOne();
+    }
 }
 
 ?>

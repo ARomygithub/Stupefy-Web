@@ -73,7 +73,7 @@ function deleteAlbum(){
                 }
             }
         }
-        url = "/app/controllers/SongController.php?id="+$id;
+        url = "/app/controllers/AlbumController.php?id="+$id;
 
         xhr.open("DELETE", url, true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");

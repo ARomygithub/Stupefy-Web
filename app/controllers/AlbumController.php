@@ -76,10 +76,29 @@
             $cardOptions .= createEntry($song);
         }
         $cardCurrentSong = createCurrentSong($addedSongbyID);
-
-        echo json_encode([$cardOptions, $cardCurrentSong, $addedSongbyID['Penyanyi']]);
-    } else if(isset($_POST["Delete"])){
         
+        echo json_encode([$cardOptions, $cardCurrentSong, $addedSongbyID['Penyanyi']]);
+    } else if ($_SERVER['REQUEST_METHOD'] === "DELETE") { 
+        $albums = new Album();
+        $album = $albums->getPath(intval($_GET['id']));
+        $thumbnail_path = $album['Image_path'];
+
+        $songs_album = $songs->getByAlbumID($_GET['id']);  
+        $songs_id = [];
+        foreach($songs_album as $song){
+            array_push($songs_id, $song['song_id']);
+        }      
+        $songs->updateAlbumID($songs_id, NULL);
+
+        if(isset($thumbnail_path)){
+            if(file_exists($thumbnail_path)){
+                unlink($thumbnail_path);
+            }
+        }
+        $albums->deleteAlbumbyID(intval($_GET['id']));
+        
+        echo json_encode(['status' => 'success', 'message' => 'Album deleted successfully']);
+    }else if(isset($_POST["Delete"])){
         $currentSongs = $_POST["Song"];
         $id = $_POST["song-id"];
 
@@ -93,6 +112,7 @@
         foreach ($availableSongs as $song) {
             $cardOptions .= createEntry($song);
         }
+    
         echo json_encode([$cardOptions,  $currentSongs]);
     } else if(isset($_POST["Submit"])){
         $thumbnail_directory = "./../../storage/thumbnail//";
@@ -192,22 +212,7 @@
             echo json_encode(['status' => 'success', 'message' => 'Album added successfully']);
 
         }
-    } else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') { 
-        $albums = new Album();
-        $album = $salbum->getPath(intval($_GET['id']));
-
-        $thumbnail_path = $album['Image_path'];
-
-        if(isset($thumbnail_path)){
-            if(file_exists($thumbnail_path)){
-                unlink($thumbnail_path);
-            }
-        }
-        
-        $albums->deleteAlbumbyID(intval($_GET['id']));
-        
-        echo json_encode(['status' => 'success', 'message' => 'Song deleted successfully']);
-    }else{
+    } else{
         $songs = $songs->getAvailableSong(NULL, []);
         $cards = '';
         foreach ($songs as $song) {
