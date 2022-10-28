@@ -81,50 +81,53 @@ Stupefy merupakan perangkat lunak berbasis web yang memiliki fungsionalitas untu
 ## 5. Screenshot Layar
 ### 5.1. Halaman Login
 #### *Screen Capture*
+![Screenshot](doc/login-1.png)
+![Screenshot](doc/login-2.png)
 
 
 ### 5.2. Halaman Register
 #### *Screen Capture*
+![Screenshot](doc/register-1.png)
+![Screenshot](doc/register-2.png)
 
 
 ### 5.3. Halaman Dashboard
 #### *Screen Capture*
+![Screenshot](doc/guest-home.png)
+![Screenshot](doc/user-home.png)
+![Screenshot](doc/admin-home.png)
 
 
 ### 5.4. Halaman Pencarian, Filter, dan Sort
 #### *Screen Capture*
+![Screenshot](doc/search.png)
 
 
-### 5.5 Halaman Pagination
+### 5.5. Halaman Penambahan Lagu
 #### *Screen Capture*
+![Screenshot](doc/add-song-1.png)
+![Screenshot](doc/add-song-2.png)
 
-
-### 5.6. Halaman Penambahan Lagu
-#### *Screen Capture*
-
-### 5.7 Penghapusan Lagu
+### 5.6 Detail Lagu
 ###  *Screen Capture*
+![Screenshot](doc/detail-song.png)
 
-### 5.8 Detail Lagu
+### 5.7 Pengubahan Detail Lagu
 ###  *Screen Capture*
+![Screenshot](doc/edit-song.png)
 
-### 5.9 Pengubahan Detail Lagu
+### 5.8 Penambahan Album Baru
 ###  *Screen Capture*
+![Screenshot](doc/add-album-1.png)
+![Screenshot](doc/add-album-2.png)
 
-### 5.10 Penambahan Album Baru
+### 5.9 Detail Album
 ###  *Screen Capture*
+![Screenshot](doc/detail-album.png)
 
-### 5.11 Penghapusan Album
+### 5.10 Pengubahan Detail Album
 ###  *Screen Capture*
-
-### 5.12 Detail Album
-###  *Screen Capture*
-
-### 5.13 Pengubahan Detail Album
-###  *Screen Capture*
-
-### 5.14 Database
-### *Screen Capture*
+![Screenshot](doc/edit-album.png)
 
 
 ## 6. Pembagian Tugas
