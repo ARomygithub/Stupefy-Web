@@ -37,7 +37,7 @@ class Song{
     }
 
     public function getByAlbumID($album_id){
-        $this->db->prepare("SELECT * FROM $this->table WHERE album_id = :album_id");
+        $this->db->prepare("SELECT song_id, Judul, Penyanyi, YEAR(Tanggal_terbit) AS Tahun, Genre, Image_path FROM $this->table WHERE album_id = :album_id");
         $this->db->bind(':album_id', $album_id);
         return $this->db->getAll();
     }

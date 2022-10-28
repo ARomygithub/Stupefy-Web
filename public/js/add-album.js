@@ -232,7 +232,7 @@ function submitform(event){
                 let result = JSON.parse(xhr.responseText);
                 if(result['status'] === "success"){
                     alert(result['message']);
-                    document.location.href = ".";
+                    document.location.href = "./album.php";
                 } else{
                     document.getElementById(result['status']).innerHTML = result['message'];
                     document.getElementById(result['status']).style.display = "block";
