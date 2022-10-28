@@ -88,16 +88,25 @@ if(isset($_POST['play_song'])) {
     if(isValidAuthCookie($_COOKIE)){
         echo json_encode(["play song success"]);
     } else{
-        if(!isset($_SESSION['last_played']) || $_POST['song_id']!==$_SESSION['last_played']) {
-            if($_SESSION['total_played'] < 3) {
-                $_SESSION['total_played']++;
-                $_SESSION['last_played'] = $_POST['song_id'];
-                echo json_encode(["play song success", $_SESSION['total_played']]);
-            } else {
-                echo json_encode(["play song failed", $_SESSION['total_played']]);
-            }
+        if(!isset($_SESSION['last_date_played'])) {
+            $_SESSION['last_date_played'] = date('Y-m-d');
+            $_SESSION['total_played'] = 1;
+            echo json_encode(["play song success", $_SESSION['total_played'], $_SESSION['last_date_played']]);
         } else {
-            echo json_encode(["play song success", $_SESSION['total_played']]);
+            $last_date_played = $_SESSION['last_date_played'];
+            $today = date('Y-m-d');
+            if($last_date_played === $today) {
+                if($_SESSION['total_played'] < 3) {
+                    $_SESSION['total_played'] += 1;
+                    echo json_encode(["play song success", $_SESSION['total_played'], $_SESSION['last_date_played']]);
+                } else {
+                    echo json_encode(["play song failed", $_SESSION['total_played'], $_SESSION['last_date_played']]);
+                }
+            } else {
+                $_SESSION['last_date_played'] = $today;
+                $_SESSION['total_played'] = 1;
+                echo json_encode(["play song success", $_SESSION['total_played'], $_SESSION['last_date_played']]);
+            }
         }
     }
 }

@@ -169,7 +169,6 @@
         $album->updateAlbum($albumName, $albumArtist, $albumReleaseDate, $albumGenre, $albumID, $thumbnail_path, $album_duration);
         $songs->updateAlbum($albumSongs, $albumID);
 
-        
 
         echo json_encode(['status' => 'success', 'message' => 'Album updated successfully']);
     } else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') { 
