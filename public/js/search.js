@@ -28,18 +28,35 @@ window.onload = function(){
     if(location.search!=="") {
         url = url+location.search+"&offset=0&limit="+limit.toString();
         current_url = location.search;
-        let judul = new URLSearchParams(location.search).get("search");
+        let urlParams = new URLSearchParams(location.search);
+        let judul = urlParams.get("search");
         document.getElementById("search-input").value = judul;
         if(judul==="") {
             document.getElementsByClassName("container-title")[0].innerHTML = "All Songs";
         } else {
             document.getElementsByClassName("container-title")[0].innerHTML = "Search for \""+judul+"\"";
         }
+        let sort_select = document.getElementById("sort-select");
+        if(urlParams.get("orderby") && urlParams.get("order")) {
+            let sort_val = urlParams.get("orderby")+" "+urlParams.get("order");
+            console.log("sort_val: "+sort_val);
+            sort_select.value = sort_val;
+        } else {
+            sort_select.value = "Judul ASC";
+        }
+        let filter_select = document.getElementById("filter-select");
+        if(urlParams.get("genre")) {
+            filter_select.value = urlParams.get("genre");
+        } else {
+            filter_select.value = "Genre";
+        }
     } else {
         url = url+"?search=";
         current_url="?search=";
         document.getElementById("search-input").value = "";
         document.getElementsByClassName("container-title")[0].innerHTML = "All songs";
+        document.getElementById("sort-select").value = "Judul ASC";
+        document.getElementById("filter-select").value = "Genre";
     }
 
     xhr.open("GET", url, true);
@@ -99,12 +116,6 @@ function updatePage(xhr) {
 function generatePagination(countPage) {
     let pagination = document.getElementsByClassName("pagination")[0];
     pagination.innerHTML = "";
-    //coba pake cara lain
-    // while(pagination.lastChild) {
-    //     pagination.removeChild(pagination.lastChild);
-    // }
-    // page 1
-    // pagination.innerHTML += "<li class='page-item active'>1</li>";
     if(countPage > 1 || current_page>1) {
         addPagination(pagination,1);
         // page ... atau cur-2,cur-1,cur
@@ -175,10 +186,17 @@ let searchInput = document.getElementById("search-input");
 searchInput.addEventListener("keyup", debounce(function(event) {
     let xhr = new XMLHttpRequest();
     let keyword = document.getElementById("search-input").value;
-    let url = "/app/controllers/SearchController.php?search="+keyword+"&offset=0&limit="+limit.toString();
-    // cek komponen sort
-    // cek komponen filter
-    current_url = "?search="+keyword;
+    let orderQry = document.getElementById("sort-select").value.split(" ");
+    let filterGenre = document.getElementById("filter-select").value;
+    let orderby = orderQry[0];
+    let order = orderQry[1];
+    let url = "/app/controllers/SearchController.php?search="+keyword+"&orderby="+orderby+"&order="+order;
+    current_url = "?search="+keyword+"&orderby="+orderby+"&order="+order;
+    if(filterGenre!=="Genre") {
+        url += "&genre="+filterGenre;
+        current_url += "&genre="+filterGenre;
+    }
+    url += "&offset=0&limit="+limit.toString();
     xhr.onreadystatechange = function() { 
         if (xhr.readyState == 4 && xhr.status == 200) {
             current_page = 1;
@@ -221,6 +239,10 @@ sort_select.addEventListener("change", function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             current_page = 1;
             updatePage(xhr);
+            state = {
+                page: current_page
+            };
+            history.pushState(state,"","search.php"+current_url);
         }
     }
     xhr.open("GET", url, true);
@@ -247,6 +269,10 @@ filter_genre.addEventListener("change", function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             current_page = 1;
             updatePage(xhr);
+            state = {
+                page: current_page
+            };
+            history.pushState(state,"","search.php"+current_url);
         }
     }
     xhr.open("GET", url, true);
