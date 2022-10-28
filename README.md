@@ -121,9 +121,9 @@ Stupefy merupakan perangkat lunak berbasis web yang memiliki fungsionalitas untu
 | Detail Lagu  |  | :white_check_mark: | :white_check_mark: |
 | Pengubahan Detail Lagu  |  | :white_check_mark: | :white_check_mark: |
 | Penambahan Album Baru  |  | :white_check_mark: |  |
-| Penghapusan Album  |  |  | :white_check_mark: |
+| Penghapusan Album  |  | :white_check_mark: |  |
 | Detail Album  |  |  | :white_check_mark: |
-| Pengubahan Detail Album  |  | :white_check_mark: | :white_check_mark: |
+| Pengubahan Detail Album  |  | :white_check_mark: |  |
 | Database  |  | :white_check_mark: |  |
 
 **Client-side**
