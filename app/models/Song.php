@@ -16,6 +16,11 @@ class Song{
         return $this->db->getAll();
     }
 
+    public function getAllGenre() {
+        $this->db->prepare("SELECT DISTINCT Genre FROM $this->table WHERE Genre IS NOT NULL ORDER BY Genre");
+        return $this->db->getAll();
+    }
+
     public function getByID($id){
         $this->db->prepare("SELECT * FROM $this->table WHERE song_id = :id");
         $this->db->bind(':id', $id);
