@@ -26,3 +26,30 @@ function get_query(){
     }
     return result;
 }
+
+
+function deleteSong(){
+    if(confirm("Do you really want to delete this song?")) {
+        let $id = get_query()['id'];
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() { 
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+                let result = JSON.parse(xhr.responseText);
+                if(result["status"] === "success"){
+                    alert(result["message"]);
+                    window.location.href = "/public";
+                }
+                else{
+                    alert("Delete failed");
+                }
+            }
+        }
+        url = "/app/controllers/SongController.php?id="+$id;
+
+        xhr.open("DELETE", url, true);
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.send();
+    }
+       
+}
