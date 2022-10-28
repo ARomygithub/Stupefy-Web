@@ -39,7 +39,7 @@
             $limit = (int)$_GET['limit'];
         }
         $albums = new Album();
-        $albums = $albums->getTemplated($offset, $limit);
+        $albums = $albums->getTemplated($offset, 4*$limit);
         $cards = "";
         $i = 1;
         foreach($albums as $album){
