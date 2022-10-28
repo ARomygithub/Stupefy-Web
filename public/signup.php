@@ -32,7 +32,7 @@
     <div id="container">
         <div id="content">
             <div id="logo">
-                <img src="img/logo.png" alt="logo" />
+                <img src="img/logo.png" alt="logo" id="logo-image" />
             </div>
             <div id="signup-form">
                 <form>
@@ -43,7 +43,7 @@
                     <?php echo_field("Confirm Password", "password", "Confirm Password"); ?>
                     <p class="to-term">By clicking on sign-up, you agree to <a href="tes.php">Stupefy's Terms and Conditions of Use</a></p>
                 </form>
-                    <button id="signup-button">SIGN UP</button>
+                    <button id="signup-button">Sign Up</button>
             </div>
             <label class="to-login">Have an account? <a href="login.php">Log in</a></label>
         </div>

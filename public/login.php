@@ -20,7 +20,7 @@
     <div id="container">
         <div id="content">
             <div id="logo">
-                <img src="img/logo.png" alt="logo" />
+                <img src="img/logo.png" alt="logo" id="logo-image" />
             </div>
             <div id="login">
                 <form action="login.php" method="POST">
@@ -34,14 +34,14 @@
                     </div>
                 </form>
                 <div id="div-button">
-                    <input type="submit" id="login-button" value="LOG IN"/>
+                    <input type="submit" id="login-button" value="Log in"/>
                 </div>
                 <hr>
             </div>
             <label class="label1">Don't have an account?</label>
-            <div id="signup" href="signup.php">
-                <label>SIGN UP</label>
-            </div>
+            <a id="signup" href="signup.php">
+                Sign up
+            </a>
         </div>
     </div>
 </body>
