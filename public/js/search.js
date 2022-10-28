@@ -95,6 +95,9 @@ function getDetailedSong($id){
 function updatePage(xhr) {
     let contents = document.getElementsByClassName("contents")[0];
     let response = JSON.parse(xhr.responseText);
+    let filterVal = document.getElementById("filter-select").value;
+    document.getElementById("filter-select").innerHTML = response[2];
+    document.getElementById("filter-select").value = filterVal;
     if(response[0] !== "") {
         contents.innerHTML = response[0];
         console.log("response[0]: "+response[0]);

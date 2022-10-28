@@ -42,6 +42,20 @@
         return $html;
     }
 
+    function createFilterGenreHtml($genres) {
+        $html = <<<"EOT"
+            <option value="Genre">Genre</option>
+            EOT;
+        // echo $genres[0]["Genre"];
+        for ($i = 0; $i < count($genres); $i++) {
+            $genresi = $genres[$i]["Genre"];
+            $html .= <<<"EOT"
+                <option value="$genresi">$genresi</option>
+                EOT;
+        }
+        return $html;
+    }
+
     if(isset($_GET["search"])) {
         $searchValue = $_GET["search"];
         $searchBy = "all";
@@ -83,19 +97,13 @@
                 $songs = $song->searchWithGenre($searchValue, $genre, $order, $orderby, $offset, $limit*4);
             }
         }
-        // } else if($searchBy==="all" && $genre!=="all") {
-        //     $songs = $song->searchByGenre($searchValue, $genre, $order, $orderby);
-        // } else if($searchBy!=="all" && $genre==="all") {
-        //     $songs = $song->searchBy($searchValue, $searchBy, $order, $orderby);
-        // } else {
-        //     $songs = $song->searchByAndGenre($searchValue, $genre, $searchBy, $order, $orderby);
-        // }
+        $allGenre = $song->getAllGenre();
         $cards = '';
         $count = count($songs);
         for($i=0; $i<min($count,$limit); $i++) {
             $cards .= createEntry($songs[$i], $i+$offset+1);
         }
-        $data = [$cards, $count];
+        $data = [$cards, $count, createFilterGenreHtml($allGenre)];
         echo json_encode($data);
         // echo json_encode([$song->getWithOrder(0,20,"Judul","ASC"),$count]);
     }
